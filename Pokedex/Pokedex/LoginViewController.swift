@@ -31,7 +31,7 @@ class LoginViewController: UIViewController {
                 return
             }
         
-        print(userName + " " + password)
+        print("Username: " + userName +  " -- " + "Password: " + password)
     }
 
     override func didReceiveMemoryWarning() {
