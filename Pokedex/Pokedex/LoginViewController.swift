@@ -41,13 +41,20 @@ class LoginViewController: UIViewController {
 
     
     @IBAction func registerButtonActionHandler(_ sender: Any) {
-        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            let bundle = Bundle.main
+            let storyboard = UIStoryboard(name: "Main", bundle: bundle)
+            let registerViewController = storyboard.instantiateViewController(
+                withIdentifier: "RegisterViewController"
+            )
+            DispatchQueue.main.asyncAfter(deadline: .now()) {
             MBProgressHUD.showAdded(to: self.view, animated: true)
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             MBProgressHUD.hide(for: self.view, animated: true)
-        }
-        
+            self.navigationController?.pushViewController(registerViewController, animated: true)
+
+            }
+    
     }
     
     
