@@ -22,8 +22,19 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         loginButton.setTitle("Login", for:UIControlState.normal)
-        registerButton.setTitle("Register", for:UIControlState.normal)
+        registerButton.setTitle("Sign up", for:UIControlState.normal)
         
+        let userNameImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        let passwordImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        
+        userNameTextField.leftViewMode = UITextFieldViewMode.always
+        passwordTextField.leftViewMode = UITextFieldViewMode.always
+        
+        userNameImageView.image = UIImage(named: "ic-mail")
+        passwordImageView.image = UIImage(named: "ic-lock")
+        
+        userNameTextField.leftView = userNameImageView
+        passwordTextField.leftView = passwordImageView
     }
     
     @IBAction func loginButtonActionHandler(_ sender: Any) {

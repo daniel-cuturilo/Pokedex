@@ -2,7 +2,10 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "pokedex-logo-big.pdf",
+      "filename" : "pokedex-logo-big.pdf"
+    },
+    {
+      "idiom" : "universal",
       "scale" : "1x"
     },
     {
