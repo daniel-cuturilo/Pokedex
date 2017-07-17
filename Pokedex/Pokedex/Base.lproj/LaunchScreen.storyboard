@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.19" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.19" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.16"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -12,24 +13,33 @@
         <scene sceneID="EHf-IW-A2E">
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
-                        <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
-                    </layoutGuides>
+                    <layoutGuides/>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pokeball" translatesAutoresizingMaskIntoConstraints="NO" id="iH5-xR-PlN">
-                                <rect key="frame" x="68" y="288" width="185" height="88"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pokeball" translatesAutoresizingMaskIntoConstraints="NO" id="iH5-xR-PlN">
+                                <rect key="frame" x="120" y="229" width="80" height="130"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="pokedex-logo-big" translatesAutoresizingMaskIntoConstraints="NO" id="yMM-du-WdH">
-                                <rect key="frame" x="68" y="145" width="185" height="98"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pokedex-logo-big" translatesAutoresizingMaskIntoConstraints="NO" id="yMM-du-WdH">
+                                <rect key="frame" x="120" y="90" width="80" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="81G-MO-bQ6"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="iH5-xR-PlN" firstAttribute="centerX" secondItem="pS2-Vu-lyU" secondAttribute="centerX" id="75c-DM-J1O"/>
+                            <constraint firstItem="iH5-xR-PlN" firstAttribute="top" secondItem="yMM-du-WdH" secondAttribute="bottom" constant="19" id="7eA-28-ZyD"/>
+                            <constraint firstItem="yMM-du-WdH" firstAttribute="leading" secondItem="iH5-xR-PlN" secondAttribute="leading" id="F3O-yu-wpQ"/>
+                            <constraint firstItem="yMM-du-WdH" firstAttribute="trailing" secondItem="iH5-xR-PlN" secondAttribute="trailing" id="KH8-dE-c3S"/>
+                            <constraint firstItem="iH5-xR-PlN" firstAttribute="centerY" secondItem="pS2-Vu-lyU" secondAttribute="centerY" id="O1m-9P-0mo"/>
+                            <constraint firstItem="yMM-du-WdH" firstAttribute="centerX" secondItem="pS2-Vu-lyU" secondAttribute="centerX" id="jXq-sR-xwa"/>
+                            <constraint firstItem="yMM-du-WdH" firstAttribute="top" secondItem="pS2-Vu-lyU" secondAttribute="top" constant="70" id="too-Oh-G1m"/>
+                            <constraint firstItem="yMM-du-WdH" firstAttribute="leading" secondItem="pS2-Vu-lyU" secondAttribute="leading" constant="120" id="wSk-1e-nSK"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="pS2-Vu-lyU"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
