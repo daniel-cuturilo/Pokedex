@@ -37,9 +37,17 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vNk-oi-wC9">
                                 <rect key="frame" x="137" y="269" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Login"/>
                                 <connections>
                                     <action selector="loginButtonActionHandler:" destination="VdU-vz-t2x" eventType="touchUpInside" id="vGN-sw-eBQ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bWl-2G-2Nm">
+                                <rect key="frame" x="133" y="307" width="57" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Register"/>
+                                <connections>
+                                    <action selector="registerButtonActionHandler:" destination="VdU-vz-t2x" eventType="touchUpInside" id="3Wa-09-oaJ"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -48,12 +56,30 @@
                     <connections>
                         <outlet property="loginButton" destination="vNk-oi-wC9" id="lPp-4A-zGB"/>
                         <outlet property="passwordTextField" destination="E4c-53-tY2" id="hRM-Ms-KsR"/>
+                        <outlet property="registerButton" destination="bWl-2G-2Nm" id="nMU-cC-x8F"/>
                         <outlet property="userNameTextField" destination="Dtx-1G-2KG" id="wrd-WX-KcW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bM0-tt-F00" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-243.75" y="-3.1690140845070425"/>
+        </scene>
+        <!--Register View Controller-->
+        <scene sceneID="r6i-Wx-loe">
+            <objects>
+                <viewController id="thV-9D-Jah" customClass="RegisterViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="msZ-qT-gHm"/>
+                        <viewControllerLayoutGuide type="bottom" id="mmQ-VH-d45"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="S5k-qf-LDz">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pat-KZ-fDo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
         </scene>
     </scenes>
 </document>

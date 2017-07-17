@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class LoginViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    
+    @IBOutlet weak var registerButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +22,8 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         loginButton.setTitle("Login", for:UIControlState.normal)
+        registerButton.setTitle("Register", for:UIControlState.normal)
+        
     }
     
     @IBAction func loginButtonActionHandler(_ sender: Any) {
@@ -34,6 +39,18 @@ class LoginViewController: UIViewController {
         print("Username: " + userName +  " -- " + "Password: " + password)
     }
 
+    
+    @IBAction func registerButtonActionHandler(_ sender: Any) {
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            MBProgressHUD.showAdded(to: self.view, animated: true)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            MBProgressHUD.hide(for: self.view, animated: true)
+        }
+        
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
