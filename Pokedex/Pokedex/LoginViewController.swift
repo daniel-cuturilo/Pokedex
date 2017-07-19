@@ -7,7 +7,10 @@
 //
 
 import UIKit
-import MBProgressHUD
+import Alamofire
+import CodableAlamofire
+import PKHUD
+//import MBProgressHUD
 
 class LoginViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
@@ -38,7 +41,7 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func loginButtonActionHandler(_ sender: Any) {
-        guard
+       /*  guard
             let userName = userNameTextField.text,
             let password = passwordTextField.text,
             !userName.isEmpty,
@@ -47,7 +50,48 @@ class LoginViewController: UIViewController {
                 return
             }
         
-        print("Username: " + userName +  " -- " + "Password: " + password)
+        print("Username: " + userName +  " -- " + "Password: " + password) */
+        guard
+            let email = userNameTextField.text,
+            let password = passwordTextField.text,
+            !email.isEmpty,
+            !password.isEmpty
+            else {
+                return
+            }
+        
+        let params = [
+            "data": [
+                "type": "session",
+                "attributes": [
+                    "email": email,
+                    "password": password
+                ]
+            ]
+        ]
+        
+     //   PKHUD.sharedHUD.show()
+        
+        Alamofire
+            .request(
+                "https://pokeapi.infinum.co/api/v1/users/login",
+                method: .post,
+                parameters: params
+            )
+            .validate()
+            .responseDecodableObject { (response: DataResponse<User>) in
+                
+                switch response.result {
+                case .success(let user):
+                    print("DECODED: \(user)")
+                case .failure(let error):
+                    print("FAILURE: \(error)")
+                }
+                
+        }
+        
+                
+        
     }
 
     
@@ -57,6 +101,8 @@ class LoginViewController: UIViewController {
             let registerViewController = storyboard.instantiateViewController(
                 withIdentifier: "RegisterViewController"
             )
+        
+        /*
             DispatchQueue.main.asyncAfter(deadline: .now()) {
             MBProgressHUD.showAdded(to: self.view, animated: true)
             }
@@ -65,7 +111,7 @@ class LoginViewController: UIViewController {
             self.navigationController?.pushViewController(registerViewController, animated: true)
 
             }
-    
+        */
     }
     
     
