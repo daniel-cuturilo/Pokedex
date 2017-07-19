@@ -16,41 +16,19 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    
     @IBOutlet weak var registerButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        loginButton.setTitle("Login", for:UIControlState.normal)
-        registerButton.setTitle("Sign up", for:UIControlState.normal)
-        
-        let userNameImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        let passwordImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        
-        userNameTextField.leftViewMode = UITextFieldViewMode.always
-        passwordTextField.leftViewMode = UITextFieldViewMode.always
-        
-        userNameImageView.image = UIImage(named: "ic-mail")
-        passwordImageView.image = UIImage(named: "ic-lock")
-        
-        userNameTextField.leftView = userNameImageView
-        passwordTextField.leftView = passwordImageView
+        setTextFieldIcons()
     }
     
     @IBAction func loginButtonActionHandler(_ sender: Any) {
-       /*  guard
-            let userName = userNameTextField.text,
-            let password = passwordTextField.text,
-            !userName.isEmpty,
-            !password.isEmpty
-            else {
-                return
-            }
         
-        print("Username: " + userName +  " -- " + "Password: " + password) */
+        // print("Username: " + userName +  " -- " + "Password: " + password)
+        
         guard
             let email = userNameTextField.text,
             let password = passwordTextField.text,
@@ -70,8 +48,6 @@ class LoginViewController: UIViewController {
             ]
         ]
         
-     //   PKHUD.sharedHUD.show()
-        
         Alamofire
             .request(
                 "https://pokeapi.infinum.co/api/v1/users/login",
@@ -84,13 +60,16 @@ class LoginViewController: UIViewController {
                 switch response.result {
                 case .success(let user):
                     print("DECODED: \(user)")
+                    let bundle = Bundle.main
+                    let storyboard = UIStoryboard(name: "Main", bundle: bundle)
+                    let homeViewController = storyboard.instantiateViewController(
+                        withIdentifier: "HomeViewController"
+                    )
+                    self.navigationController?.setViewControllers([homeViewController], animated: true)
                 case .failure(let error):
                     print("FAILURE: \(error)")
                 }
-                
         }
-        
-                
         
     }
 
@@ -98,22 +77,38 @@ class LoginViewController: UIViewController {
     @IBAction func registerButtonActionHandler(_ sender: Any) {
             let bundle = Bundle.main
             let storyboard = UIStoryboard(name: "Main", bundle: bundle)
-            let registerViewController = storyboard.instantiateViewController(
-                withIdentifier: "RegisterViewController"
-            )
+            let registerViewController = storyboard.instantiateViewController(withIdentifier: "RegisterViewController")
+            self.navigationController?.pushViewController(registerViewController, animated: true)
+        
         
         /*
             DispatchQueue.main.asyncAfter(deadline: .now()) {
-            MBProgressHUD.showAdded(to: self.view, animated: true)
+                MBProgressHUD.showAdded(to: self.view, animated: true)
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            MBProgressHUD.hide(for: self.view, animated: true)
-            self.navigationController?.pushViewController(registerViewController, animated: true)
-
+                MBProgressHUD.hide(for: self.view, animated: true)
             }
+            self.navigationController?.pushViewController(registerViewController, animated: true)
+         
         */
     }
     
+    func setTextFieldIcons () {
+        loginButton.setTitle("Login", for:UIControlState.normal)
+        registerButton.setTitle("Sign up", for:UIControlState.normal)
+        
+        let userNameImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        let passwordImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        
+        userNameTextField.leftViewMode = UITextFieldViewMode.always
+        passwordTextField.leftViewMode = UITextFieldViewMode.always
+        
+        userNameImageView.image = UIImage(named: "ic-mail")
+        passwordImageView.image = UIImage(named: "ic-lock")
+        
+        userNameTextField.leftView = userNameImageView
+        passwordTextField.leftView = passwordImageView
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

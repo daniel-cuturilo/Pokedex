@@ -165,7 +165,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="registerButtonActionHandler:" destination="VdU-vz-t2x" eventType="touchUpInside" id="X51-CY-r9B"/>
+                                    <action selector="signUpButtonActionHandler:" destination="thV-9D-Jah" eventType="touchUpInside" id="Xgl-HT-Ugz"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -195,6 +195,7 @@
                         <outlet property="nicknameTextField" destination="HLR-KM-sNP" id="6Rv-jK-dI7"/>
                         <outlet property="passwordConfirmTextField" destination="6F1-wd-FPV" id="Slg-Eg-rTl"/>
                         <outlet property="passwordTextField" destination="cFn-fO-cOH" id="nn2-ws-SVM"/>
+                        <outlet property="signUpButton" destination="OSZ-hl-4kc" id="kmx-fq-hOZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pat-KZ-fDo" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -204,18 +205,33 @@
         <!--Home View Controller-->
         <scene sceneID="cO4-89-Z3J">
             <objects>
-                <viewController id="7h0-SW-0Gg" customClass="HomeViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7h0-SW-0Gg" customClass="HomeViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides/>
                     <view key="view" contentMode="scaleToFill" id="vLX-sj-yvJ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ful-Qr-u4d">
+                                <rect key="frame" x="80" y="114" width="160" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="HOME SCREEN">
+                                        <attributes>
+                                            <font key="NSFont" metaFont="system" size="14"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="EMw-hR-NNa"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7cU-0v-jud" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1521" y="-4"/>
+            <point key="canvasLocation" x="1520.625" y="-4.225352112676056"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9H9-zj-caX">

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import CodableAlamofire
 
 class RegisterViewController: UIViewController {
 
@@ -14,11 +16,69 @@ class RegisterViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var nicknameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var signUpButton: UIButton!
+    
+    @IBAction func signUpButtonActionHandler(_ sender: Any) {
+        guard
+            let email = emailTextField.text,
+            let username = nicknameTextField.text,
+            let password = passwordTextField.text,
+            let passwordConfirm = passwordConfirmTextField.text,
+            !email.isEmpty,
+            !username.isEmpty,
+            !password.isEmpty,
+            !passwordConfirm.isEmpty
+            else {
+                print ("Mistake")
+                return
+        }
+        
+        // print("Email: " + email +  " -- " + "Username: " + username + " -- " + "Password: " + password)
+        
+        let params = [
+            "data": [
+                "type": "users",
+                "attributes": [
+                    "email": email,
+                    "username": username,
+                    "password": password,
+                    "password-confirmation": password
+                ]
+            ]
+        ]
+        
+        Alamofire
+            .request(
+                "https://pokeapi.infinum.co/api/v1/users",
+                method: .post,
+                parameters: params
+            )
+            .validate()
+            .responseDecodableObject { (response: DataResponse<User>) in
+                
+                switch response.result {
+                case .success(let user):
+                    print("DECODED: \(user)")
+                    let bundle = Bundle.main
+                    let storyboard = UIStoryboard(name: "Main", bundle: bundle)
+                    let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController")
+                    self.navigationController?.setViewControllers([homeViewController], animated: true)
+                    
+                case .failure(let error):
+                    print("FAILURE: \(error)")
+                }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        setTextFieldIcons()
+        
+    }
+        
+    func setTextFieldIcons () {
         let emailImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         let nicknameImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         let passwordImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
@@ -38,8 +98,8 @@ class RegisterViewController: UIViewController {
         nicknameTextField.leftView = nicknameImageView
         passwordTextField.leftView = passwordImageView
         passwordConfirmTextField.leftView = passwordConfirmImageView
-        
     }
+            
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
