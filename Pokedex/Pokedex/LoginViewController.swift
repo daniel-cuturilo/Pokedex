@@ -48,6 +48,7 @@ class LoginViewController: UIViewController {
             ]
         ]
         
+        
         Alamofire
             .request(
                 "https://pokeapi.infinum.co/api/v1/users/login",
@@ -60,13 +61,13 @@ class LoginViewController: UIViewController {
                 switch response.result {
                 case .success(let user):
                     print("DECODED: \(user)")
+                    HUD.flash(.success, delay: 1.0)
                     let bundle = Bundle.main
                     let storyboard = UIStoryboard(name: "Main", bundle: bundle)
-                    let homeViewController = storyboard.instantiateViewController(
-                        withIdentifier: "HomeViewController"
-                    )
+                    let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController")
                     self.navigationController?.setViewControllers([homeViewController], animated: true)
                 case .failure(let error):
+                    HUD.flash(.error, delay: 1.0)
                     print("FAILURE: \(error)")
                 }
         }

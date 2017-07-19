@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import CodableAlamofire
+import PKHUD
 
 class RegisterViewController: UIViewController {
 
@@ -59,6 +60,7 @@ class RegisterViewController: UIViewController {
                 switch response.result {
                 case .success(let user):
                     print("DECODED: \(user)")
+                    HUD.flash(.success, delay: 1.0)
                     let bundle = Bundle.main
                     let storyboard = UIStoryboard(name: "Main", bundle: bundle)
                     let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController")
@@ -66,6 +68,7 @@ class RegisterViewController: UIViewController {
                     
                 case .failure(let error):
                     print("FAILURE: \(error)")
+                    HUD.flash(.error, delay: 1.0)
                 }
         }
     }
