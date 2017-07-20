@@ -17,6 +17,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var registerButton: UIButton!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,19 +82,19 @@ class LoginViewController: UIViewController {
             let bundle = Bundle.main
             let storyboard = UIStoryboard(name: "Main", bundle: bundle)
             let registerViewController = storyboard.instantiateViewController(withIdentifier: "RegisterViewController")
-            self.navigationController?.pushViewController(registerViewController, animated: true)
+            self.navigationController?.pushViewController(registerViewController, animated: true) 
         
         
-        /*
-            DispatchQueue.main.asyncAfter(deadline: .now()) {
+        
+         /*   DispatchQueue.main.asyncAfter(deadline: .now()) {
                 MBProgressHUD.showAdded(to: self.view, animated: true)
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
                 MBProgressHUD.hide(for: self.view, animated: true)
-            }
-            self.navigationController?.pushViewController(registerViewController, animated: true)
+                self.navigationController?.pushViewController(registerViewController, animated: true)
+            } */
          
-        */
+ 
     }
     
     func setTextFieldIcons () {
@@ -113,6 +114,7 @@ class LoginViewController: UIViewController {
         userNameTextField.leftView = userNameImageView
         passwordTextField.leftView = passwordImageView
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
