@@ -19,25 +19,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pokeball" translatesAutoresizingMaskIntoConstraints="NO" id="iH5-xR-PlN">
-                                <rect key="frame" x="120" y="229" width="80" height="130"/>
+                                <rect key="frame" x="120" y="258.5" width="80" height="151"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pokedex-logo-big" translatesAutoresizingMaskIntoConstraints="NO" id="yMM-du-WdH">
-                                <rect key="frame" x="120" y="90" width="80" height="120"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="120" id="81G-MO-bQ6"/>
-                                </constraints>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pokedex-logo-big" translatesAutoresizingMaskIntoConstraints="NO" id="yMM-du-WdH">
+                                <rect key="frame" x="30" y="-36" width="260" height="500"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="iH5-xR-PlN" firstAttribute="centerX" secondItem="pS2-Vu-lyU" secondAttribute="centerX" id="75c-DM-J1O"/>
-                            <constraint firstItem="iH5-xR-PlN" firstAttribute="top" secondItem="yMM-du-WdH" secondAttribute="bottom" constant="19" id="7eA-28-ZyD"/>
-                            <constraint firstItem="yMM-du-WdH" firstAttribute="leading" secondItem="iH5-xR-PlN" secondAttribute="leading" id="F3O-yu-wpQ"/>
-                            <constraint firstItem="yMM-du-WdH" firstAttribute="trailing" secondItem="iH5-xR-PlN" secondAttribute="trailing" id="KH8-dE-c3S"/>
-                            <constraint firstItem="iH5-xR-PlN" firstAttribute="centerY" secondItem="pS2-Vu-lyU" secondAttribute="centerY" id="O1m-9P-0mo"/>
-                            <constraint firstItem="yMM-du-WdH" firstAttribute="centerX" secondItem="pS2-Vu-lyU" secondAttribute="centerX" id="jXq-sR-xwa"/>
-                            <constraint firstItem="yMM-du-WdH" firstAttribute="top" secondItem="pS2-Vu-lyU" secondAttribute="top" constant="70" id="too-Oh-G1m"/>
-                            <constraint firstItem="yMM-du-WdH" firstAttribute="leading" secondItem="pS2-Vu-lyU" secondAttribute="leading" constant="120" id="wSk-1e-nSK"/>
+                            <constraint firstItem="yMM-du-WdH" firstAttribute="leading" secondItem="pS2-Vu-lyU" secondAttribute="leading" constant="30" id="81Q-UZ-5Rv"/>
+                            <constraint firstItem="iH5-xR-PlN" firstAttribute="centerY" secondItem="pS2-Vu-lyU" secondAttribute="centerY" constant="40" id="8Lm-vi-aAC"/>
+                            <constraint firstItem="iH5-xR-PlN" firstAttribute="leading" secondItem="pS2-Vu-lyU" secondAttribute="leading" constant="120" id="Aoy-WQ-YTM"/>
+                            <constraint firstItem="yMM-du-WdH" firstAttribute="centerY" secondItem="pS2-Vu-lyU" secondAttribute="centerY" constant="-80" id="LoY-8D-4IR"/>
+                            <constraint firstItem="pS2-Vu-lyU" firstAttribute="trailing" secondItem="iH5-xR-PlN" secondAttribute="trailing" constant="120" id="Y0r-ke-JkH"/>
+                            <constraint firstItem="pS2-Vu-lyU" firstAttribute="trailing" secondItem="yMM-du-WdH" secondAttribute="trailing" constant="30" id="fkg-hv-5Pg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="pS2-Vu-lyU"/>
                     </view>

@@ -22,6 +22,8 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        loginButton.setTitle("Login", for:UIControlState.normal)
+        registerButton.setTitle("Sign up", for:UIControlState.normal)
         setTextFieldIcons()
     }
     
@@ -95,14 +97,15 @@ class LoginViewController: UIViewController {
     }
     
     func setTextFieldIcons () {
-        loginButton.setTitle("Login", for:UIControlState.normal)
-        registerButton.setTitle("Sign up", for:UIControlState.normal)
+        let iconWidth = 24
+        let iconHeight = 24
         
-        let userNameImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        let passwordImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        let userNameImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: iconWidth, height: iconHeight))
+        let passwordImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: iconWidth, height: iconHeight))
         
         userNameTextField.leftViewMode = UITextFieldViewMode.always
         passwordTextField.leftViewMode = UITextFieldViewMode.always
+        passwordTextField.rightViewMode = UITextFieldViewMode.always
         
         userNameImageView.image = UIImage(named: "ic-mail")
         passwordImageView.image = UIImage(named: "ic-lock")

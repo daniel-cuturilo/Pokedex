@@ -82,10 +82,13 @@ class RegisterViewController: UIViewController {
     }
         
     func setTextFieldIcons () {
-        let emailImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        let nicknameImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        let passwordImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        let passwordConfirmImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        let iconWidth = 24
+        let iconHeight = 24
+        
+        let emailImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: iconWidth, height: iconHeight))
+        let nicknameImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: iconWidth, height: iconHeight))
+        let passwordImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: iconWidth, height: iconHeight))
+        let passwordConfirmImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: iconWidth, height: iconHeight))
         
         emailTextField.leftViewMode = UITextFieldViewMode.always
         nicknameTextField.leftViewMode = UITextFieldViewMode.always
@@ -102,7 +105,6 @@ class RegisterViewController: UIViewController {
         passwordTextField.leftView = passwordImageView
         passwordConfirmTextField.leftView = passwordConfirmImageView
     }
-            
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
