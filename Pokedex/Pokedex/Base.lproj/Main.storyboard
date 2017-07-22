@@ -109,11 +109,11 @@
                                     </view>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="DPT-dB-5pk" firstAttribute="top" secondItem="Fyp-EN-Dy0" secondAttribute="top" id="6Ld-1r-Gpq"/>
                                     <constraint firstItem="DPT-dB-5pk" firstAttribute="leading" secondItem="Fyp-EN-Dy0" secondAttribute="leading" id="7eo-wQ-4sl"/>
                                     <constraint firstAttribute="bottom" secondItem="DPT-dB-5pk" secondAttribute="bottom" id="EmV-Qx-bdV"/>
                                     <constraint firstItem="DPT-dB-5pk" firstAttribute="centerX" secondItem="Fyp-EN-Dy0" secondAttribute="centerX" id="Zjt-ek-s2k"/>
                                     <constraint firstAttribute="trailing" secondItem="DPT-dB-5pk" secondAttribute="trailing" id="eC3-4u-9bl"/>
-                                    <constraint firstItem="DPT-dB-5pk" firstAttribute="top" secondItem="Fyp-EN-Dy0" secondAttribute="top" id="edJ-je-T4e"/>
                                     <constraint firstItem="DPT-dB-5pk" firstAttribute="centerY" secondItem="Fyp-EN-Dy0" secondAttribute="centerY" id="h3l-4V-2Aq"/>
                                     <constraint firstAttribute="bottom" secondItem="DPT-dB-5pk" secondAttribute="bottom" id="mtf-GZ-y64"/>
                                 </constraints>
@@ -126,6 +126,7 @@
                             <constraint firstItem="Fyp-EN-Dy0" firstAttribute="top" secondItem="CJf-Lc-BMj" secondAttribute="top" id="avJ-DT-u3L"/>
                             <constraint firstItem="Fyp-EN-Dy0" firstAttribute="width" secondItem="CJf-Lc-BMj" secondAttribute="width" id="lHN-cO-7j0"/>
                             <constraint firstItem="Fyp-EN-Dy0" firstAttribute="leading" secondItem="CJf-Lc-BMj" secondAttribute="leading" id="sZe-q1-Cia"/>
+                            <constraint firstItem="N7e-LN-sIR" firstAttribute="trailing" secondItem="Fyp-EN-Dy0" secondAttribute="trailing" id="uwt-sF-Y3M"/>
                             <constraint firstItem="Fyp-EN-Dy0" firstAttribute="leading" secondItem="N7e-LN-sIR" secondAttribute="leading" id="xwF-XV-W8n"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="N7e-LN-sIR"/>
