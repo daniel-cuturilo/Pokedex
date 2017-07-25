@@ -7,14 +7,46 @@
 //
 
 import UIKit
+import Alamofire
+import CodableAlamofire
 
 class HomeViewController: UIViewController {
-
+    var user: User!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        print(user)
+        getPokemons()
     }
+    
+    func getPokemons () {
+        let tokenString = "Token token=" + user.authToken + ", email=" + user.email
+        let headers = ["Authorization": tokenString]
+        
+        
+        Alamofire
+            .request(
+                "https://pokeapi.infinum.co/api/v1/pokemons",
+                method: .get,
+                headers: headers
+            )
+            .validate()
+            .responseDecodableObject(keyPath: "data") { (response: DataResponse<[Pokemon]>) in
+                
+                switch response.result {
+                case .success(let pokemons):
+                    print("DECODED: \(pokemons)")
+                case .failure(let error):
+                    print("FAILURE: \(error)")
+                }
+        }
+        
+        
+        
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

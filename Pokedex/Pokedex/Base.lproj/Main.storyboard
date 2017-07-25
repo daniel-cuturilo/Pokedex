@@ -116,6 +116,7 @@
                                     <constraint firstAttribute="trailing" secondItem="DPT-dB-5pk" secondAttribute="trailing" id="eC3-4u-9bl"/>
                                     <constraint firstItem="DPT-dB-5pk" firstAttribute="centerY" secondItem="Fyp-EN-Dy0" secondAttribute="centerY" id="h3l-4V-2Aq"/>
                                     <constraint firstAttribute="bottom" secondItem="DPT-dB-5pk" secondAttribute="bottom" id="mtf-GZ-y64"/>
+                                    <constraint firstItem="DPT-dB-5pk" firstAttribute="width" secondItem="Fyp-EN-Dy0" secondAttribute="width" id="yPr-E6-BLK"/>
                                 </constraints>
                             </scrollView>
                         </subviews>

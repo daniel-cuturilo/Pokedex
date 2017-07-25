@@ -66,7 +66,8 @@ class LoginViewController: UIViewController {
                     HUD.flash(.success, delay: 1.0)
                     let bundle = Bundle.main
                     let storyboard = UIStoryboard(name: "Main", bundle: bundle)
-                    let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController")
+                    let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+                    homeViewController.user = user
                     self.navigationController?.setViewControllers([homeViewController], animated: true)
                 case .failure(let error):
                     HUD.flash(.error, delay: 1.0)
@@ -133,3 +134,6 @@ class LoginViewController: UIViewController {
     
     
 }
+
+
+
