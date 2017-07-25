@@ -12,6 +12,15 @@ import CodableAlamofire
 
 class HomeViewController: UIViewController {
     var user: User!
+    var pokemons = [Pokemon]()
+    
+    @IBOutlet weak var tableView: UITableView! {
+        didSet {
+            tableView.delegate = self
+            tableView.dataSource = self
+        }
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,31 +46,63 @@ class HomeViewController: UIViewController {
                 
                 switch response.result {
                 case .success(let pokemons):
-                    print("DECODED: \(pokemons)")
+                    pokemons.forEach({ pokemon in
+                        self.pokemons.append(pokemon)
+                    })
+                    self.tableView.reloadData()
+                    //print("DECODED: \(pokemons)")
+                    
                 case .failure(let error):
                     print("FAILURE: \(error)")
                 }
         }
-        
-        
-        
     }
     
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+}
+
+// MARK: - TableView -
+extension HomeViewController: UITableViewDataSource {
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func numberOfSections(in tableView: UITableView) -> Int {
+        /*
+         struct Section {
+             let name: String
+             let items: [Int]
+         }
+         
+         let sections: [Section]
+         
+         return sections.count
+         */
+        return 1
     }
-    */
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        /* Number of rows in each section */
+        return pokemons.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: PokemonCell = tableView.dequeueReusableCell(
+            withIdentifier: "PokemonCell",
+            for: indexPath
+            ) as! PokemonCell
+        
+        let pokemon = pokemons[indexPath.row]
+        cell.label.text = pokemon.name
+        
+        //cell.contentView.backgroundColor = indexPath.row % 2 == 0 ? UIColor.red : UIColor.white
+        
+        return cell
+    }
+}
 
+extension HomeViewController: UITableViewDelegate {
+    /* func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+           return 90
+       }    */
 }

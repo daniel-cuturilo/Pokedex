@@ -86,7 +86,7 @@ class LoginViewController: UIViewController {
         
         
         
-         /*   DispatchQueue.main.asyncAfter(deadline: .now()) {
+         /* DispatchQueue.main.asyncAfter(deadline: .now()) {
                 MBProgressHUD.showAdded(to: self.view, animated: true)
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {

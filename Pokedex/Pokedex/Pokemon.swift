@@ -27,4 +27,7 @@ struct Pokemon: Codable {
     }
     
     let attributes: PokeAttributes
+    
+    var name: String  { return attributes.name }
+    
 }
