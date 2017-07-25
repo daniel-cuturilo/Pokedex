@@ -45,7 +45,8 @@ class HomeViewController: UIViewController {
             .responseDecodableObject(keyPath: "data") { (response: DataResponse<[Pokemon]>) in
                 
                 switch response.result {
-                case .success(let pokemons):
+                case .success(var pokemons):
+                    pokemons = pokemons.sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
                     pokemons.forEach({ pokemon in
                         self.pokemons.append(pokemon)
                     })

@@ -19,13 +19,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fyp-EN-Dy0">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DPT-dB-5pk">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="PyS-cB-63b">
-                                                <rect key="frame" x="20" y="30" width="280" height="279"/>
+                                                <rect key="frame" x="20" y="30" width="280" height="276"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" semanticContentAttribute="forceLeftToRight" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pokedex-logo-big" translatesAutoresizingMaskIntoConstraints="NO" id="uLn-BE-Oj2">
                                                         <rect key="frame" x="0.0" y="0.0" width="280" height="100"/>
@@ -35,12 +35,12 @@
                                                         </constraints>
                                                     </imageView>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pokeball" translatesAutoresizingMaskIntoConstraints="NO" id="d5b-mV-Zpp">
-                                                        <rect key="frame" x="64.5" y="100" width="151" height="179"/>
+                                                        <rect key="frame" x="64.5" y="100" width="151" height="176"/>
                                                     </imageView>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="MeL-fk-M2U" userLabel="Text Fields Stack View">
-                                                <rect key="frame" x="30" y="317" width="260" height="72"/>
+                                                <rect key="frame" x="30" y="314" width="260" height="72"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" placeholder=" Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dtx-1G-2KG">
                                                         <rect key="frame" x="0.0" y="0.0" width="260" height="36"/>
@@ -61,7 +61,7 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="njP-VF-103" userLabel="Buttons Stack View">
-                                                <rect key="frame" x="0.0" y="419" width="320" height="88"/>
+                                                <rect key="frame" x="0.0" y="416" width="320" height="88"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vNk-oi-wC9">
                                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -96,13 +96,12 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="MeL-fk-M2U" firstAttribute="leading" secondItem="DPT-dB-5pk" secondAttribute="leading" constant="30" id="0Va-Lu-AAx"/>
-                                            <constraint firstAttribute="bottom" secondItem="njP-VF-103" secondAttribute="bottom" constant="61" id="FV9-J4-B7m"/>
                                             <constraint firstItem="PyS-cB-63b" firstAttribute="centerX" secondItem="DPT-dB-5pk" secondAttribute="centerX" id="FZU-mY-H3F"/>
                                             <constraint firstItem="PyS-cB-63b" firstAttribute="top" secondItem="DPT-dB-5pk" secondAttribute="top" constant="30" id="Hyy-aP-C42"/>
                                             <constraint firstItem="njP-VF-103" firstAttribute="leading" secondItem="DPT-dB-5pk" secondAttribute="leading" id="Ryf-eB-e5c"/>
-                                            <constraint firstAttribute="bottom" secondItem="njP-VF-103" secondAttribute="bottom" constant="61" id="XpM-gQ-OKV"/>
                                             <constraint firstAttribute="trailing" secondItem="MeL-fk-M2U" secondAttribute="trailing" constant="30" id="cwZ-mB-HHq"/>
                                             <constraint firstItem="njP-VF-103" firstAttribute="top" secondItem="MeL-fk-M2U" secondAttribute="bottom" constant="30" id="hMa-ZV-zuc"/>
+                                            <constraint firstAttribute="bottom" secondItem="njP-VF-103" secondAttribute="bottom" id="qb5-60-qGB"/>
                                             <constraint firstAttribute="trailing" secondItem="njP-VF-103" secondAttribute="trailing" id="tZZ-Oz-o2w"/>
                                             <constraint firstItem="MeL-fk-M2U" firstAttribute="top" secondItem="PyS-cB-63b" secondAttribute="bottom" constant="8" id="u7R-Ca-dkl"/>
                                         </constraints>
@@ -111,22 +110,21 @@
                                 <constraints>
                                     <constraint firstItem="DPT-dB-5pk" firstAttribute="top" secondItem="Fyp-EN-Dy0" secondAttribute="top" id="6Ld-1r-Gpq"/>
                                     <constraint firstItem="DPT-dB-5pk" firstAttribute="leading" secondItem="Fyp-EN-Dy0" secondAttribute="leading" id="7eo-wQ-4sl"/>
-                                    <constraint firstAttribute="bottom" secondItem="DPT-dB-5pk" secondAttribute="bottom" id="EmV-Qx-bdV"/>
                                     <constraint firstItem="DPT-dB-5pk" firstAttribute="centerX" secondItem="Fyp-EN-Dy0" secondAttribute="centerX" id="Zjt-ek-s2k"/>
                                     <constraint firstAttribute="trailing" secondItem="DPT-dB-5pk" secondAttribute="trailing" id="eC3-4u-9bl"/>
                                     <constraint firstItem="DPT-dB-5pk" firstAttribute="centerY" secondItem="Fyp-EN-Dy0" secondAttribute="centerY" id="h3l-4V-2Aq"/>
                                     <constraint firstAttribute="bottom" secondItem="DPT-dB-5pk" secondAttribute="bottom" id="mtf-GZ-y64"/>
-                                    <constraint firstItem="DPT-dB-5pk" firstAttribute="width" secondItem="Fyp-EN-Dy0" secondAttribute="width" id="yPr-E6-BLK"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="0.9359032693943532" green="1" blue="0.98218660291864657" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="Fyp-EN-Dy0" firstAttribute="centerX" secondItem="N7e-LN-sIR" secondAttribute="centerX" id="7hF-PK-NmM"/>
+                            <constraint firstItem="Fyp-EN-Dy0" firstAttribute="top" secondItem="N7e-LN-sIR" secondAttribute="top" id="HAN-fN-qzP"/>
+                            <constraint firstItem="N7e-LN-sIR" firstAttribute="bottom" secondItem="Fyp-EN-Dy0" secondAttribute="bottom" id="KGL-7R-Pmv"/>
                             <constraint firstItem="DPT-dB-5pk" firstAttribute="width" secondItem="CJf-Lc-BMj" secondAttribute="width" id="PT9-M1-8bX"/>
-                            <constraint firstItem="Fyp-EN-Dy0" firstAttribute="bottom" secondItem="N7e-LN-sIR" secondAttribute="bottom" id="Vav-Ou-3HP"/>
-                            <constraint firstItem="Fyp-EN-Dy0" firstAttribute="top" secondItem="CJf-Lc-BMj" secondAttribute="top" id="avJ-DT-u3L"/>
+                            <constraint firstItem="Fyp-EN-Dy0" firstAttribute="centerY" secondItem="N7e-LN-sIR" secondAttribute="centerY" id="ji0-dK-lEo"/>
                             <constraint firstItem="Fyp-EN-Dy0" firstAttribute="width" secondItem="CJf-Lc-BMj" secondAttribute="width" id="lHN-cO-7j0"/>
-                            <constraint firstItem="Fyp-EN-Dy0" firstAttribute="leading" secondItem="CJf-Lc-BMj" secondAttribute="leading" id="sZe-q1-Cia"/>
                             <constraint firstItem="N7e-LN-sIR" firstAttribute="trailing" secondItem="Fyp-EN-Dy0" secondAttribute="trailing" id="uwt-sF-Y3M"/>
                             <constraint firstItem="Fyp-EN-Dy0" firstAttribute="leading" secondItem="N7e-LN-sIR" secondAttribute="leading" id="xwF-XV-W8n"/>
                         </constraints>
@@ -137,6 +135,7 @@
                         <outlet property="loginButton" destination="vNk-oi-wC9" id="lPp-4A-zGB"/>
                         <outlet property="passwordTextField" destination="E4c-53-tY2" id="hRM-Ms-KsR"/>
                         <outlet property="registerButton" destination="bWl-2G-2Nm" id="nMU-cC-x8F"/>
+                        <outlet property="scrollView" destination="Fyp-EN-Dy0" id="6Vz-19-vKy"/>
                         <outlet property="userNameTextField" destination="Dtx-1G-2KG" id="wrd-WX-KcW"/>
                         <outlet property="view" destination="DPT-dB-5pk" id="adU-FE-Qro"/>
                     </connections>

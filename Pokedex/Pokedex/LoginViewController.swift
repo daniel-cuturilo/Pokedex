@@ -17,6 +17,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var registerButton: UIButton!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +26,26 @@ class LoginViewController: UIViewController {
         loginButton.setTitle("Login", for:UIControlState.normal)
         registerButton.setTitle("Sign up", for:UIControlState.normal)
         setTextFieldIcons()
+        
+        NotificationCenter
+            .default
+            .addObserver(forName: Notification.Name.UIKeyboardWillShow, object: nil, queue: OperationQueue.main) { notification in
+                var userInfo = notification.userInfo!
+                var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+                keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+                
+                var contentInset:UIEdgeInsets = self.scrollView.contentInset
+                contentInset.bottom = keyboardFrame.size.height
+                self.scrollView.contentInset = contentInset
+        }
+        
+        NotificationCenter
+            .default
+            .addObserver(forName: Notification.Name.UIKeyboardWillHide, object: nil, queue: OperationQueue.main) { notification in
+                let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+                self.scrollView.contentInset = contentInset
+        }
+        
     }
     
     @IBAction func loginButtonActionHandler(_ sender: Any) {
