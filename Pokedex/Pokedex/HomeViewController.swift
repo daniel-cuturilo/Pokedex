@@ -11,7 +11,7 @@ import Alamofire
 import CodableAlamofire
 
 class HomeViewController: UIViewController {
-    var user: User!
+    var user: User?
     var pokemons = [Pokemon]()
     
     @IBOutlet weak var tableView: UITableView! {
@@ -26,11 +26,13 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        guard let user = user else { return }
         print(user)
         getPokemons()
     }
     
     func getPokemons () {
+        guard let user = user else { return }
         let tokenString = "Token token=" + user.authToken + ", email=" + user.email
         let headers = ["Authorization": tokenString]
         
@@ -42,15 +44,19 @@ class HomeViewController: UIViewController {
                 headers: headers
             )
             .validate()
-            .responseDecodableObject(keyPath: "data") { (response: DataResponse<[Pokemon]>) in
+            .responseDecodableObject(keyPath: "data") { [weak self] (response: DataResponse<[Pokemon]>) in
+                guard let strongSelf = self else { return }
                 
                 switch response.result {
                 case .success(var pokemons):
                     pokemons = pokemons.sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
+                    
+                    // pokemons = strongSelf.pokemons.map { (pokemon: Pokemon) -> Pokemon in
+                     //   return pokemon
                     pokemons.forEach({ pokemon in
-                        self.pokemons.append(pokemon)
+                        strongSelf.pokemons.append(pokemon)
                     })
-                    self.tableView.reloadData()
+                    strongSelf.tableView.reloadData()
                     //print("DECODED: \(pokemons)")
                     
                 case .failure(let error):
@@ -103,7 +109,5 @@ extension HomeViewController: UITableViewDataSource {
 }
 
 extension HomeViewController: UITableViewDelegate {
-    /* func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-           return 90
-       }    */
+    // change later
 }

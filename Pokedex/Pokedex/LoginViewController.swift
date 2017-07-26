@@ -12,41 +12,57 @@ import CodableAlamofire
 import PKHUD
 //import MBProgressHUD
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     
+    var willShowKeyboardNotification: NSObjectProtocol!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         loginButton.setTitle("Login", for:UIControlState.normal)
         registerButton.setTitle("Sign up", for:UIControlState.normal)
         setTextFieldIcons()
         
-        NotificationCenter
+        willShowKeyboardNotification = NotificationCenter
             .default
-            .addObserver(forName: Notification.Name.UIKeyboardWillShow, object: nil, queue: OperationQueue.main) { notification in
+            .addObserver(forName: Notification.Name.UIKeyboardWillShow, object: nil, queue: OperationQueue.main) { [weak self] notification in
+                guard let strongSelf = self else { return }
                 var userInfo = notification.userInfo!
                 var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
-                keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+                keyboardFrame = strongSelf.view.convert(keyboardFrame, from: nil)
                 
-                var contentInset:UIEdgeInsets = self.scrollView.contentInset
+                var contentInset:UIEdgeInsets = strongSelf.scrollView.contentInset
                 contentInset.bottom = keyboardFrame.size.height
-                self.scrollView.contentInset = contentInset
+                strongSelf.scrollView.contentInset = contentInset
         }
         
         NotificationCenter
             .default
-            .addObserver(forName: Notification.Name.UIKeyboardWillHide, object: nil, queue: OperationQueue.main) { notification in
+            .addObserver(forName: Notification.Name.UIKeyboardWillHide, object: nil, queue: OperationQueue.main) { [weak self] notification in
+                guard let strongSelf = self else { return }
                 let contentInset:UIEdgeInsets = UIEdgeInsets.zero
-                self.scrollView.contentInset = contentInset
+                strongSelf.scrollView.contentInset = contentInset
         }
         
+        userNameTextField.delegate = self
+        passwordTextField.delegate = self
     }
+        
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(willShowKeyboardNotification)
+    }
+    
     
     @IBAction func loginButtonActionHandler(_ sender: Any) {
         

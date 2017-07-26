@@ -11,7 +11,7 @@ import Alamofire
 import CodableAlamofire
 import PKHUD
 
-class RegisterViewController: UIViewController {
+class RegisterViewController: UIViewController, Progressable {
 
     @IBOutlet weak var passwordConfirmTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -60,15 +60,23 @@ class RegisterViewController: UIViewController {
                 switch response.result {
                 case .success(let user):
                     print("DECODED: \(user)")
-                    HUD.flash(.success, delay: 1.0)
+                    self.showSuccess()
                     let bundle = Bundle.main
                     let storyboard = UIStoryboard(name: "Main", bundle: bundle)
-                    let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController")
-                    self.navigationController?.setViewControllers([homeViewController], animated: true)
+                    let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+                    homeViewController.user = user
+                    
+                    // right way?
+                    let moveToHomeController: () -> Void = { [weak self] in
+                        guard let strongSelf = self else { return }
+                        strongSelf.navigationController?.setViewControllers([homeViewController], animated: true)
+                    }
+                    moveToHomeController()
+                    
                     
                 case .failure(let error):
                     print("FAILURE: \(error)")
-                    HUD.flash(.error, delay: 1.0)
+                    self.showFailure()
                 }
         }
     }
@@ -111,15 +119,18 @@ class RegisterViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+}
 
-    /*
-    // MARK: - Navigation
+protocol Progressable {
+    func showSuccess()
+    func showFailure()
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+extension Progressable where Self: UIViewController {
+    func showSuccess() {
+        HUD.flash(.success, delay: 1.0)
     }
-    */
-
+    func showFailure() {
+        HUD.flash(.error, delay: 1.0)
+    }
 }

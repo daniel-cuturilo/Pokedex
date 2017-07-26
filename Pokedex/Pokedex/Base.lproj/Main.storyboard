@@ -56,7 +56,7 @@
                                                             <constraint firstAttribute="height" constant="36" id="0i0-dv-RSq"/>
                                                         </constraints>
                                                         <attributedString key="attributedText"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                                     </textField>
                                                 </subviews>
                                             </stackView>
@@ -110,20 +110,18 @@
                                 <constraints>
                                     <constraint firstItem="DPT-dB-5pk" firstAttribute="top" secondItem="Fyp-EN-Dy0" secondAttribute="top" id="6Ld-1r-Gpq"/>
                                     <constraint firstItem="DPT-dB-5pk" firstAttribute="leading" secondItem="Fyp-EN-Dy0" secondAttribute="leading" id="7eo-wQ-4sl"/>
-                                    <constraint firstItem="DPT-dB-5pk" firstAttribute="centerX" secondItem="Fyp-EN-Dy0" secondAttribute="centerX" id="Zjt-ek-s2k"/>
+                                    <constraint firstItem="DPT-dB-5pk" firstAttribute="height" secondItem="Fyp-EN-Dy0" secondAttribute="height" id="Rog-Ad-oCa"/>
                                     <constraint firstAttribute="trailing" secondItem="DPT-dB-5pk" secondAttribute="trailing" id="eC3-4u-9bl"/>
-                                    <constraint firstItem="DPT-dB-5pk" firstAttribute="centerY" secondItem="Fyp-EN-Dy0" secondAttribute="centerY" id="h3l-4V-2Aq"/>
                                     <constraint firstAttribute="bottom" secondItem="DPT-dB-5pk" secondAttribute="bottom" id="mtf-GZ-y64"/>
+                                    <constraint firstItem="DPT-dB-5pk" firstAttribute="width" secondItem="Fyp-EN-Dy0" secondAttribute="width" id="pTZ-Lc-eiB"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="0.9359032693943532" green="1" blue="0.98218660291864657" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Fyp-EN-Dy0" firstAttribute="centerX" secondItem="N7e-LN-sIR" secondAttribute="centerX" id="7hF-PK-NmM"/>
                             <constraint firstItem="Fyp-EN-Dy0" firstAttribute="top" secondItem="N7e-LN-sIR" secondAttribute="top" id="HAN-fN-qzP"/>
                             <constraint firstItem="N7e-LN-sIR" firstAttribute="bottom" secondItem="Fyp-EN-Dy0" secondAttribute="bottom" id="KGL-7R-Pmv"/>
-                            <constraint firstItem="DPT-dB-5pk" firstAttribute="width" secondItem="CJf-Lc-BMj" secondAttribute="width" id="PT9-M1-8bX"/>
-                            <constraint firstItem="Fyp-EN-Dy0" firstAttribute="centerY" secondItem="N7e-LN-sIR" secondAttribute="centerY" id="ji0-dK-lEo"/>
+                            <constraint firstItem="DPT-dB-5pk" firstAttribute="width" secondItem="CJf-Lc-BMj" secondAttribute="width" id="c9Z-CK-m0Y"/>
                             <constraint firstItem="Fyp-EN-Dy0" firstAttribute="width" secondItem="CJf-Lc-BMj" secondAttribute="width" id="lHN-cO-7j0"/>
                             <constraint firstItem="N7e-LN-sIR" firstAttribute="trailing" secondItem="Fyp-EN-Dy0" secondAttribute="trailing" id="uwt-sF-Y3M"/>
                             <constraint firstItem="Fyp-EN-Dy0" firstAttribute="leading" secondItem="N7e-LN-sIR" secondAttribute="leading" id="xwF-XV-W8n"/>
@@ -137,7 +135,6 @@
                         <outlet property="registerButton" destination="bWl-2G-2Nm" id="nMU-cC-x8F"/>
                         <outlet property="scrollView" destination="Fyp-EN-Dy0" id="6Vz-19-vKy"/>
                         <outlet property="userNameTextField" destination="Dtx-1G-2KG" id="wrd-WX-KcW"/>
-                        <outlet property="view" destination="DPT-dB-5pk" id="adU-FE-Qro"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bM0-tt-F00" userLabel="First Responder" sceneMemberID="firstResponder"/>
