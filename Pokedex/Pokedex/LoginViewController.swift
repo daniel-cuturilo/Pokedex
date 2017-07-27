@@ -12,7 +12,7 @@ import CodableAlamofire
 import PKHUD
 //import MBProgressHUD
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -99,19 +99,22 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 
                 switch response.result {
                 case .success(let user):
-                    print("DECODED: \(user)")
-                    HUD.flash(.success, delay: 1.0)
+                    //print("DECODED: \(user)")
+                    self.showSuccess()
                     let bundle = Bundle.main
                     let storyboard = UIStoryboard(name: "Main", bundle: bundle)
                     let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
                     homeViewController.user = user
                     self.navigationController?.setViewControllers([homeViewController], animated: true)
+                    
                 case .failure(let error):
-                    HUD.flash(.error, delay: 1.0)
+                    //self.showFailure()
                     print("FAILURE: \(error)")
+                    let alertController = UIAlertController(title: "Login not successful.", message: "Wrong username or password. Try again.", preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default,handler: nil))
+                    self.present(alertController, animated: true, completion: nil)
                 }
         }
-        
     }
 
     
@@ -130,8 +133,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 MBProgressHUD.hide(for: self.view, animated: true)
                 self.navigationController?.pushViewController(registerViewController, animated: true)
             } */
-         
- 
     }
     
     func setTextFieldIcons () {

@@ -12,7 +12,7 @@
         <!--Login View Controller-->
         <scene sceneID="CKO-nR-h1v">
             <objects>
-                <viewController id="VdU-vz-t2x" customClass="LoginViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VdU-vz-t2x" customClass="LoginViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides/>
                     <view key="view" contentMode="scaleToFill" id="CJf-Lc-BMj">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -270,6 +270,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="EMw-hR-NNa"/>
                     </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="Vut-F2-c6Z" id="WZO-XC-SMC"/>
                     </connections>
@@ -277,6 +279,96 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7cU-0v-jud" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1520.625" y="-4.225352112676056"/>
+        </scene>
+        <!--Add Pokemon View Controller-->
+        <scene sceneID="dI2-Hx-B9L">
+            <objects>
+                <viewController storyboardIdentifier="AddPokemonViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DFv-Bf-NK1" customClass="AddPokemonViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides/>
+                    <view key="view" contentMode="scaleToFill" id="tTl-w8-CCz">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9cK-fu-B4n">
+                                <rect key="frame" x="54" y="216" width="216" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Height" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sMt-hz-fBg">
+                                <rect key="frame" x="54" y="254" width="216" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Weight" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DGX-sg-iKX">
+                                <rect key="frame" x="54" y="292" width="216" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5tI-Qb-2zY">
+                                <rect key="frame" x="54" y="330" width="216" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Abilites" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="foJ-oG-O8C">
+                                <rect key="frame" x="54" y="368" width="216" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eTk-9z-wq8">
+                                <rect key="frame" x="54" y="406" width="216" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="saveButtonActionHandler:" destination="DFv-Bf-NK1" eventType="touchUpInside" id="VfX-br-KIU"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q2n-PO-AvA">
+                                <rect key="frame" x="0.0" y="531" width="320" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.16298726199999999" green="0.291993171" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Save">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="saveButtonActionHandler:" destination="DFv-Bf-NK1" eventType="touchUpInside" id="Zk4-jo-lMO"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.69999999999999996" contentMode="scaleToFill" fixedFrame="YES" text="POKEMON INFO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nEr-KV-Zpd">
+                                <rect key="frame" x="30" y="168" width="158" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <viewLayoutGuide key="safeArea" id="3Ln-u1-6eX"/>
+                    </view>
+                    <connections>
+                        <outlet property="descriptionTextField" destination="eTk-9z-wq8" id="ay0-sG-fVr"/>
+                        <outlet property="heightTextField" destination="sMt-hz-fBg" id="zz5-jH-bS4"/>
+                        <outlet property="nameTextField" destination="9cK-fu-B4n" id="4rM-7y-8Xe"/>
+                        <outlet property="saveButton" destination="Q2n-PO-AvA" id="Pql-Aq-TNW"/>
+                        <outlet property="typeTextField" destination="5tI-Qb-2zY" id="ykG-GL-9DJ"/>
+                        <outlet property="weightTextField" destination="DGX-sg-iKX" id="WDa-Q9-8Es"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YhA-Km-0yE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2269" y="-5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9H9-zj-caX">
@@ -301,4 +393,5 @@
         <image name="pokeball" width="151" height="151"/>
         <image name="pokedex-logo-big" width="1200" height="500"/>
     </resources>
+    <color key="tintColor" red="0.1052754949" green="0.19083851539999999" blue="0.67626700129999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

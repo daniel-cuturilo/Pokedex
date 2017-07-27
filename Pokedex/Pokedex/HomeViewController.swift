@@ -12,6 +12,7 @@ import CodableAlamofire
 
 class HomeViewController: UIViewController {
     var user: User?
+    var pokemon: Pokemon?
     var pokemons = [Pokemon]()
     
     @IBOutlet weak var tableView: UITableView! {
@@ -21,15 +22,83 @@ class HomeViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if (pokemons.count > 0) {
+            orderPokemonsAlphabetically()
+            self.tableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: "Logout",
+            style: .plain,
+            target: self,
+            action: #selector(logout)
+        )
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Add new pokemon",
+            style: .plain,
+            target: self,
+            action: #selector(add)
+        )
+        
         guard let user = user else { return }
         print(user)
+        
         getPokemons()
     }
+    
+    // correct?
+    @objc func add () {
+        let bundle = Bundle.main
+        let storyboard = UIStoryboard(name: "Main", bundle: bundle)
+        let addPokemonViewController = storyboard.instantiateViewController(withIdentifier: "AddPokemonViewController") as! AddPokemonViewController
+        addPokemonViewController.delegate = self
+        addPokemonViewController.user = user
+        
+        let moveToAddPokemonController: () -> Void = { [weak self] in
+            guard let strongSelf = self else { return }
+            strongSelf.navigationController?.pushViewController(addPokemonViewController, animated: true)
+        }
+        moveToAddPokemonController()
+    }
+    
+    // correct?
+    @objc func logout () {
+        guard let user = user else { return }
+        let tokenString = "Token token=" + user.authToken + ", email=" + user.email
+        let headers: HTTPHeaders =  [
+            "Content-Type": "text/html",
+            "Authorization": tokenString
+        ]
+        
+        Alamofire
+            .request(
+                "https://pokeapi.infinum.co/api/v1/users/logout",
+                method: .delete,
+                headers: headers
+            )
+            .validate()
+            .responseJSON { response in
+                
+                switch response.result {
+                case .success:
+                    let bundle = Bundle.main
+                    let storyboard = UIStoryboard(name: "Main", bundle: bundle)
+                    let loginViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
+                    self.navigationController?.setViewControllers([loginViewController], animated: true)
+                    
+                case .failure(let error):
+                    print("FAILURE: \(error)")
+                }
+            }
+    }
+    
     
     func getPokemons () {
         guard let user = user else { return }
@@ -48,21 +117,21 @@ class HomeViewController: UIViewController {
                 guard let strongSelf = self else { return }
                 
                 switch response.result {
-                case .success(var pokemons):
-                    pokemons = pokemons.sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
-                    
-                    // pokemons = strongSelf.pokemons.map { (pokemon: Pokemon) -> Pokemon in
-                     //   return pokemon
-                    pokemons.forEach({ pokemon in
-                        strongSelf.pokemons.append(pokemon)
-                    })
+                case .success(let pokemons):
+                    strongSelf.pokemons = pokemons.map { (pokemon: Pokemon) -> Pokemon in
+                        return pokemon
+                    }
+                    strongSelf.orderPokemonsAlphabetically()
                     strongSelf.tableView.reloadData()
-                    //print("DECODED: \(pokemons)")
                     
                 case .failure(let error):
                     print("FAILURE: \(error)")
                 }
         }
+    }
+    
+    func orderPokemonsAlphabetically() {
+        pokemons = pokemons.sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
     }
     
     override func didReceiveMemoryWarning() {
@@ -111,3 +180,11 @@ extension HomeViewController: UITableViewDataSource {
 extension HomeViewController: UITableViewDelegate {
     // change later
 }
+
+extension HomeViewController: NewPokemonDelegate {
+    func setNewPokemon(_ pokemon: Pokemon?) {
+        guard let pokemon = pokemon else { return }
+        pokemons.append(pokemon)
+    }
+}
+
