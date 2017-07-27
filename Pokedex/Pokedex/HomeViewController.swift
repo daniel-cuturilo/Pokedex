@@ -34,18 +34,20 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: "Logout",
+            image: UIImage(named: "ic-logout"),
             style: .plain,
             target: self,
             action: #selector(logout)
         )
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Add new pokemon",
+            image: UIImage(named: "ic-plus"),
             style: .plain,
             target: self,
             action: #selector(add)
         )
+        
+        navigationItem.title = "Pokedex"
         
         guard let user = user else { return }
         print(user)

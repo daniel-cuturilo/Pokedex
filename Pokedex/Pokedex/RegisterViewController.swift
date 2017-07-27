@@ -80,8 +80,8 @@ class RegisterViewController: UIViewController, Progressable {
 
         // Do any additional setup after loading the view.
         setTextFieldIcons()
-        
     }
+    
         
     func setTextFieldIcons () {
         let iconWidth = 24

@@ -230,18 +230,17 @@
             </objects>
             <point key="canvasLocation" x="855" y="-3"/>
         </scene>
-        <!--Home View Controller-->
+        <!--Pokedex-->
         <scene sceneID="cO4-89-Z3J">
             <objects>
-                <viewController storyboardIdentifier="HomeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7h0-SW-0Gg" customClass="HomeViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeViewController" title="Pokedex" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7h0-SW-0Gg" customClass="HomeViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides/>
                     <view key="view" contentMode="scaleToFill" id="vLX-sj-yvJ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Vut-F2-c6Z">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Vut-F2-c6Z">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PokemonCell" id="8Op-4A-W1B" customClass="PokemonCell" customModule="Pokedex" customModuleProvider="target">
@@ -268,6 +267,12 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Vut-F2-c6Z" firstAttribute="leading" secondItem="EMw-hR-NNa" secondAttribute="leading" id="Kdt-rM-Ujz"/>
+                            <constraint firstItem="Vut-F2-c6Z" firstAttribute="trailing" secondItem="EMw-hR-NNa" secondAttribute="trailing" id="KlS-Qa-IYp"/>
+                            <constraint firstItem="Vut-F2-c6Z" firstAttribute="bottom" secondItem="EMw-hR-NNa" secondAttribute="bottom" id="Qbe-xE-2CG"/>
+                            <constraint firstItem="Vut-F2-c6Z" firstAttribute="top" secondItem="vLX-sj-yvJ" secondAttribute="top" id="sDC-hj-5nq"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="EMw-hR-NNa"/>
                     </view>
                     <toolbarItems/>
@@ -280,49 +285,61 @@
             </objects>
             <point key="canvasLocation" x="1520.625" y="-4.225352112676056"/>
         </scene>
-        <!--Add Pokemon View Controller-->
+        <!--Add new Pokemon-->
         <scene sceneID="dI2-Hx-B9L">
             <objects>
-                <viewController storyboardIdentifier="AddPokemonViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DFv-Bf-NK1" customClass="AddPokemonViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AddPokemonViewController" title="Add new Pokemon" useStoryboardIdentifierAsRestorationIdentifier="YES" id="DFv-Bf-NK1" customClass="AddPokemonViewController" customModule="Pokedex" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides/>
                     <view key="view" contentMode="scaleToFill" id="tTl-w8-CCz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9cK-fu-B4n">
-                                <rect key="frame" x="54" y="322" width="216" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Height" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sMt-hz-fBg">
-                                <rect key="frame" x="54" y="360" width="216" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Weight" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DGX-sg-iKX">
-                                <rect key="frame" x="54" y="398" width="216" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eTk-9z-wq8">
-                                <rect key="frame" x="54" y="436" width="216" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="saveButtonActionHandler:" destination="DFv-Bf-NK1" eventType="touchUpInside" id="VfX-br-KIU"/>
-                                </connections>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q2n-PO-AvA">
-                                <rect key="frame" x="0.0" y="531" width="320" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="G5R-cb-g5T">
+                                <rect key="frame" x="30" y="342" width="260" height="160"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9cK-fu-B4n">
+                                        <rect key="frame" x="0.0" y="0.0" width="260" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="mqU-7o-quD"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Height" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sMt-hz-fBg">
+                                        <rect key="frame" x="0.0" y="40" width="260" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="JJU-Ee-Q9c"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Weight" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DGX-sg-iKX">
+                                        <rect key="frame" x="0.0" y="80" width="260" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="49F-3u-Rpm"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eTk-9z-wq8">
+                                        <rect key="frame" x="0.0" y="120" width="260" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="iMl-As-lvQ"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="saveButtonActionHandler:" destination="DFv-Bf-NK1" eventType="touchUpInside" id="VfX-br-KIU"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q2n-PO-AvA">
+                                <rect key="frame" x="0.0" y="532" width="320" height="36"/>
                                 <color key="backgroundColor" red="0.16298726199999999" green="0.291993171" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Save">
@@ -332,20 +349,27 @@
                                     <action selector="saveButtonActionHandler:" destination="DFv-Bf-NK1" eventType="touchUpInside" id="Zk4-jo-lMO"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.69999999999999996" contentMode="scaleToFill" fixedFrame="YES" text="POKEMON INFO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nEr-KV-Zpd">
-                                <rect key="frame" x="30" y="274" width="158" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.69999999999999996" contentMode="scaleToFill" text="POKEMON INFO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nEr-KV-Zpd">
+                                <rect key="frame" x="16" y="303" width="158" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="1Vl-xc-nmp"/>
+                                    <constraint firstAttribute="width" constant="158" id="3oi-k3-5KG"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic-person" translatesAutoresizingMaskIntoConstraints="NO" id="SS8-ed-LDM">
-                                <rect key="frame" x="-1" y="91" width="322" height="188"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic-person" translatesAutoresizingMaskIntoConstraints="NO" id="SS8-ed-LDM">
+                                <rect key="frame" x="0.0" y="20" width="320" height="220"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="220" id="Iob-k0-gLY"/>
+                                </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="swW-E3-l6a">
-                                <rect key="frame" x="223" y="203" width="81" height="76"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="swW-E3-l6a">
+                                <rect key="frame" x="247" y="154" width="108" height="76"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="76" id="efX-nK-YLw"/>
+                                </constraints>
                                 <state key="normal" title="Button" image="ic-add"/>
                                 <connections>
                                     <action selector="imageButtonActionHandler:" destination="DFv-Bf-NK1" eventType="touchUpInside" id="XzQ-kk-g2u"/>
@@ -353,6 +377,22 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="3Ln-u1-6eX" firstAttribute="trailing" secondItem="swW-E3-l6a" secondAttribute="trailing" constant="-35" id="1Uy-fo-qIc"/>
+                            <constraint firstItem="Q2n-PO-AvA" firstAttribute="top" secondItem="G5R-cb-g5T" secondAttribute="bottom" constant="30" id="4Ke-7T-wkr"/>
+                            <constraint firstItem="Q2n-PO-AvA" firstAttribute="trailing" secondItem="3Ln-u1-6eX" secondAttribute="trailing" id="8NG-GO-4nW"/>
+                            <constraint firstItem="G5R-cb-g5T" firstAttribute="leading" secondItem="3Ln-u1-6eX" secondAttribute="leading" constant="30" id="IZ0-ap-4zJ"/>
+                            <constraint firstItem="SS8-ed-LDM" firstAttribute="leading" secondItem="tTl-w8-CCz" secondAttribute="leading" id="UAX-0w-frm"/>
+                            <constraint firstItem="G5R-cb-g5T" firstAttribute="top" secondItem="nEr-KV-Zpd" secondAttribute="bottom" constant="-1" id="WLy-dQ-Lje"/>
+                            <constraint firstAttribute="trailing" secondItem="SS8-ed-LDM" secondAttribute="trailing" id="fKx-nw-X6x"/>
+                            <constraint firstItem="Q2n-PO-AvA" firstAttribute="bottom" secondItem="3Ln-u1-6eX" secondAttribute="bottom" id="fW8-R8-ZPa"/>
+                            <constraint firstItem="3Ln-u1-6eX" firstAttribute="trailing" secondItem="G5R-cb-g5T" secondAttribute="trailing" constant="30" id="hSK-2Q-did"/>
+                            <constraint firstItem="swW-E3-l6a" firstAttribute="top" secondItem="3Ln-u1-6eX" secondAttribute="top" constant="134" id="hw5-Se-BbF"/>
+                            <constraint firstItem="Q2n-PO-AvA" firstAttribute="leading" secondItem="3Ln-u1-6eX" secondAttribute="leading" id="kag-9o-KEq"/>
+                            <constraint firstItem="SS8-ed-LDM" firstAttribute="top" secondItem="3Ln-u1-6eX" secondAttribute="top" id="nXg-Bo-9Cy"/>
+                            <constraint firstItem="3Ln-u1-6eX" firstAttribute="leading" secondItem="nEr-KV-Zpd" secondAttribute="trailing" constant="-174" id="sLz-Cn-aYl"/>
+                            <constraint firstItem="swW-E3-l6a" firstAttribute="trailing" secondItem="SS8-ed-LDM" secondAttribute="trailing" constant="35" id="w8M-8u-aBi"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="3Ln-u1-6eX"/>
                     </view>
                     <connections>
