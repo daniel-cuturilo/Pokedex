@@ -55,28 +55,22 @@ class RegisterViewController: UIViewController, Progressable {
                 parameters: params
             )
             .validate()
-            .responseDecodableObject { (response: DataResponse<User>) in
+            .responseDecodableObject { [weak self] (response: DataResponse<User>) in
                 
                 switch response.result {
                 case .success(let user):
                     print("DECODED: \(user)")
-                    self.showSuccess()
+                    self?.showSuccess()
                     let bundle = Bundle.main
                     let storyboard = UIStoryboard(name: "Main", bundle: bundle)
                     let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
                     homeViewController.user = user
-                    
-                    // right way?
-                    let moveToHomeController: () -> Void = { [weak self] in
-                        guard let strongSelf = self else { return }
-                        strongSelf.navigationController?.setViewControllers([homeViewController], animated: true)
-                    }
-                    moveToHomeController()
+                    self?.navigationController?.setViewControllers([homeViewController], animated: true)
                     
                     
                 case .failure(let error):
                     print("FAILURE: \(error)")
-                    self.showFailure()
+                    self?.showFailure()
                 }
         }
     }

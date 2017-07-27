@@ -290,42 +290,28 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9cK-fu-B4n">
-                                <rect key="frame" x="54" y="216" width="216" height="30"/>
+                                <rect key="frame" x="54" y="322" width="216" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Height" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sMt-hz-fBg">
-                                <rect key="frame" x="54" y="254" width="216" height="30"/>
+                                <rect key="frame" x="54" y="360" width="216" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Weight" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DGX-sg-iKX">
-                                <rect key="frame" x="54" y="292" width="216" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5tI-Qb-2zY">
-                                <rect key="frame" x="54" y="330" width="216" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Abilites" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="foJ-oG-O8C">
-                                <rect key="frame" x="54" y="368" width="216" height="30"/>
+                                <rect key="frame" x="54" y="398" width="216" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eTk-9z-wq8">
-                                <rect key="frame" x="54" y="406" width="216" height="30"/>
+                                <rect key="frame" x="54" y="436" width="216" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
@@ -347,28 +333,41 @@
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.69999999999999996" contentMode="scaleToFill" fixedFrame="YES" text="POKEMON INFO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="nEr-KV-Zpd">
-                                <rect key="frame" x="30" y="168" width="158" height="40"/>
+                                <rect key="frame" x="30" y="274" width="158" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic-person" translatesAutoresizingMaskIntoConstraints="NO" id="SS8-ed-LDM">
+                                <rect key="frame" x="-1" y="91" width="322" height="188"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="swW-E3-l6a">
+                                <rect key="frame" x="223" y="203" width="81" height="76"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button" image="ic-add"/>
+                                <connections>
+                                    <action selector="imageButtonActionHandler:" destination="DFv-Bf-NK1" eventType="touchUpInside" id="XzQ-kk-g2u"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="3Ln-u1-6eX"/>
                     </view>
                     <connections>
+                        <outlet property="addImageButton" destination="swW-E3-l6a" id="EC6-tE-Uvu"/>
                         <outlet property="descriptionTextField" destination="eTk-9z-wq8" id="ay0-sG-fVr"/>
                         <outlet property="heightTextField" destination="sMt-hz-fBg" id="zz5-jH-bS4"/>
+                        <outlet property="imageView" destination="SS8-ed-LDM" id="ZNg-aw-5t4"/>
                         <outlet property="nameTextField" destination="9cK-fu-B4n" id="4rM-7y-8Xe"/>
                         <outlet property="saveButton" destination="Q2n-PO-AvA" id="Pql-Aq-TNW"/>
-                        <outlet property="typeTextField" destination="5tI-Qb-2zY" id="ykG-GL-9DJ"/>
                         <outlet property="weightTextField" destination="DGX-sg-iKX" id="WDa-Q9-8Es"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YhA-Km-0yE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2269" y="-5"/>
+            <point key="canvasLocation" x="2268.75" y="-5.28169014084507"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="9H9-zj-caX">
@@ -390,6 +389,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ic-add" width="54" height="54"/>
+        <image name="ic-person" width="24" height="24"/>
         <image name="pokeball" width="151" height="151"/>
         <image name="pokedex-logo-big" width="1200" height="500"/>
     </resources>

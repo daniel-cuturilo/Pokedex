@@ -60,12 +60,7 @@ class HomeViewController: UIViewController {
         let addPokemonViewController = storyboard.instantiateViewController(withIdentifier: "AddPokemonViewController") as! AddPokemonViewController
         addPokemonViewController.delegate = self
         addPokemonViewController.user = user
-        
-        let moveToAddPokemonController: () -> Void = { [weak self] in
-            guard let strongSelf = self else { return }
-            strongSelf.navigationController?.pushViewController(addPokemonViewController, animated: true)
-        }
-        moveToAddPokemonController()
+        self.navigationController?.pushViewController(addPokemonViewController, animated: true)
     }
     
     // correct?
@@ -84,14 +79,14 @@ class HomeViewController: UIViewController {
                 headers: headers
             )
             .validate()
-            .responseJSON { response in
-                
+            .responseJSON { [weak self] response in
+                guard let strongSelf = self else { return }
                 switch response.result {
                 case .success:
                     let bundle = Bundle.main
                     let storyboard = UIStoryboard(name: "Main", bundle: bundle)
                     let loginViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController")
-                    self.navigationController?.setViewControllers([loginViewController], animated: true)
+                    strongSelf.navigationController?.setViewControllers([loginViewController], animated: true)
                     
                 case .failure(let error):
                     print("FAILURE: \(error)")

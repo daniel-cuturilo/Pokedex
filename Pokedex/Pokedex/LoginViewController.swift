@@ -95,24 +95,24 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
                 parameters: params
             )
             .validate()
-            .responseDecodableObject { (response: DataResponse<User>) in
+            .responseDecodableObject { [weak self](response: DataResponse<User>) in
                 
                 switch response.result {
                 case .success(let user):
                     //print("DECODED: \(user)")
-                    self.showSuccess()
+                    self?.showSuccess()
                     let bundle = Bundle.main
                     let storyboard = UIStoryboard(name: "Main", bundle: bundle)
                     let homeViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
                     homeViewController.user = user
-                    self.navigationController?.setViewControllers([homeViewController], animated: true)
+                    self?.navigationController?.setViewControllers([homeViewController], animated: true)
                     
                 case .failure(let error):
                     //self.showFailure()
                     print("FAILURE: \(error)")
                     let alertController = UIAlertController(title: "Login not successful.", message: "Wrong username or password. Try again.", preferredStyle: .alert)
                     alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default,handler: nil))
-                    self.present(alertController, animated: true, completion: nil)
+                    self?.present(alertController, animated: true, completion: nil)
                 }
         }
     }

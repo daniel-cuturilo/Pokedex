@@ -10,16 +10,37 @@ import UIKit
 import Alamofire
 import CodableAlamofire
 
-class AddPokemonViewController: UIViewController, Progressable {
+class AddPokemonViewController: UIViewController, Progressable, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     var user: User?
     weak var delegate: NewPokemonDelegate?
+    var chosenImage: UIImage?
     
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var heightTextField: UITextField!
-    @IBOutlet weak var typeTextField: UITextField!
     @IBOutlet weak var descriptionTextField: UITextField!
     @IBOutlet weak var weightTextField: UITextField!
+    
+    @IBOutlet weak var addImageButton: UIButton!
+    @IBOutlet weak var imageView: UIImageView!
+    
+    @IBAction func imageButtonActionHandler(_ sender: Any) {
+        let picker = UIImagePickerController()
+        picker.delegate = self 
+        picker.allowsEditing = false
+        picker.sourceType = .photoLibrary
+        self.present(picker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        chosenImage = info[UIImagePickerControllerOriginalImage] as? UIImage
+        imageView.image = chosenImage
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
     
     // upload pokemon on API
     @IBAction func saveButtonActionHandler(_ sender: Any) {
@@ -29,37 +50,40 @@ class AddPokemonViewController: UIViewController, Progressable {
         
         guard
             let name = nameTextField.text,
-            !name.isEmpty
+            let height = heightTextField.text,
+            let weight = weightTextField.text,
+            let description = descriptionTextField.text,
+            !name.isEmpty,
+            !height.isEmpty,
+            !weight.isEmpty,
+            !description.isEmpty
             else {
-                let alertController = UIAlertController(title: "Try again.", message: "You need to enter the name.", preferredStyle: .alert)
+                let alertController = UIAlertController(title: "Try again.", message: "You didn't enter some data.", preferredStyle: .alert)
                 alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default,handler: nil))
                 self.present(alertController, animated: true, completion: nil)
                 return
         }
         
-        let height = heightTextField.text
-        let weight = weightTextField.text
-        let description = descriptionTextField.text
-        
-        // change
+        // change?
         let attributes = [
             "name": name,
             "height": height,
             "weight": weight,
+            "order":"19",
+            "is_default":"1",
             "gender_id":"1",
             "base_experience":"30",
             "description": description
         ]
         
-        // add image picker
         Alamofire
             .upload(multipartFormData: { multipartFormData in
-                multipartFormData.append(UIImagePNGRepresentation(UIImage(named: "charmander")!)!,
+                multipartFormData.append(UIImageJPEGRepresentation(self.chosenImage!, 0.5)!,
                                          withName: "data[attributes][image]",
-                                         fileName: "image.png",
-                                         mimeType: "image/png")
+                                         fileName: "image.jpeg",
+                                         mimeType: "image/jpeg")
                 for (key, value) in attributes {
-                    multipartFormData.append((value?.data(using: .utf8)!)!, withName: "data[attributes][" + key + "]")
+                    multipartFormData.append((value.data(using: .utf8)!), withName: "data[attributes][" + key + "]")
                 }
             }, to: "https://pokeapi.infinum.co/api/v1/pokemons", method: .post, headers: headers) { [weak self] result in
                 switch result {
@@ -72,16 +96,16 @@ class AddPokemonViewController: UIViewController, Progressable {
     }
     
     private func processUploadRequest(_ uploadRequest: UploadRequest) {
-        uploadRequest.responseDecodableObject(keyPath: "data") { (response: DataResponse<Pokemon>) in
+        uploadRequest.responseDecodableObject(keyPath: "data") { [weak self] (response: DataResponse<Pokemon>) in
             switch response.result {
             case .success(let pokemon):
                 print("DECODED: \(pokemon)")
-                self.delegate?.setNewPokemon(pokemon)
-                self.showSuccess()
-                self.navigationController?.popViewController(animated: true)
+                self?.delegate?.setNewPokemon(pokemon)
+                self?.showSuccess()
+                self?.navigationController?.popViewController(animated: true)
             case .failure(let error):
                 print("FAILURE: \(error)")
-                self.showFailure()
+                self?.showFailure()
             }
         }
     }
@@ -89,8 +113,6 @@ class AddPokemonViewController: UIViewController, Progressable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
