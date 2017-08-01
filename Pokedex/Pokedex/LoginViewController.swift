@@ -20,6 +20,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
     @IBOutlet weak var scrollView: UIScrollView!
     
     var willShowKeyboardNotification: NSObjectProtocol!
+    var willHideKeyboardNotification: NSObjectProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
         registerButton.setTitle("Sign up", for:UIControlState.normal)
         setTextFieldIcons()
         
+        // NEEDS TO BE FIXED!!
         willShowKeyboardNotification = NotificationCenter
             .default
             .addObserver(forName: Notification.Name.UIKeyboardWillShow, object: nil, queue: OperationQueue.main) { [weak self] notification in
@@ -42,7 +44,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
                 strongSelf.scrollView.contentInset = contentInset
         }
         
-        NotificationCenter
+        willHideKeyboardNotification = NotificationCenter
             .default
             .addObserver(forName: Notification.Name.UIKeyboardWillHide, object: nil, queue: OperationQueue.main) { [weak self] notification in
                 guard let strongSelf = self else { return }
@@ -61,6 +63,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
     
     deinit {
         NotificationCenter.default.removeObserver(willShowKeyboardNotification)
+        NotificationCenter.default.removeObserver(willHideKeyboardNotification)
     }
     
     

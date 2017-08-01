@@ -18,6 +18,7 @@ struct Pokemon: Codable {
         let height: Float
         let weight: Float
         let gender: String
+        let description: String
         
         enum CodingKeys: String, CodingKey {
             case imageURL = "image-url"
@@ -25,11 +26,17 @@ struct Pokemon: Codable {
             case gender
             case height
             case weight
+            case description
         }
     }
     
     let attributes: PokeAttributes
     
     var name: String  { return attributes.name }
+    var height: Float  { return attributes.height }
+    var weight: Float  { return attributes.weight }
+    var gender: String  { return attributes.gender }
+    var description: String  { return attributes.description }
+    
     
 }

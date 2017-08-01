@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import CodableAlamofire
+import Kingfisher
 
 class HomeViewController: UIViewController {
     var user: User?
@@ -25,13 +26,14 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if (pokemons.count > 0) {
-            orderPokemonsAlphabetically()
+            //orderPokemonsAlphabetically()
             self.tableView.reloadData()
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.allowsSelection = true
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(named: "ic-logout"),
@@ -115,12 +117,11 @@ class HomeViewController: UIViewController {
                 
                 switch response.result {
                 case .success(let pokemons):
-                    strongSelf.pokemons = pokemons.map { (pokemon: Pokemon) -> Pokemon in
-                        return pokemon
-                    }
-                    strongSelf.orderPokemonsAlphabetically()
+                    strongSelf.pokemons = pokemons
+                    //print(pokemons)
+                    //pokemons.sort
+                    //strongSelf.orderPokemonsAlphabetically()
                     strongSelf.tableView.reloadData()
-                    
                 case .failure(let error):
                     print("FAILURE: \(error)")
                 }
@@ -165,13 +166,32 @@ extension HomeViewController: UITableViewDataSource {
             for: indexPath
             ) as! PokemonCell
         
+        cell.pokemonImage?.kf.cancelDownloadTask()
+        
         let pokemon = pokemons[indexPath.row]
         cell.label.text = pokemon.name
+        guard let imageURL = pokemon.attributes.imageURL else { return cell }
+        let url = URL(string: "https://pokeapi.infinum.co" + imageURL)
+        cell.pokemonImage.kf.setImage(with: url)
         
         //cell.contentView.backgroundColor = indexPath.row % 2 == 0 ? UIColor.red : UIColor.white
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        /* let row = indexPath.row
+        print("Row: \(row)") */
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let pokemonDetailsViewController = storyboard.instantiateViewController(withIdentifier: "PokemonDetailsViewController") as! PokemonDetailsViewController
+        pokemonDetailsViewController.pokemon = pokemons[indexPath.row]
+        self.navigationController?.pushViewController(pokemonDetailsViewController, animated: true)
+    }
+    
 }
 
 extension HomeViewController: UITableViewDelegate {

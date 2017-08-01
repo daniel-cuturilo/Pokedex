@@ -2,11 +2,13 @@ PODS:
   - Alamofire (4.4.0)
   - CodableAlamofire (0.9.0):
     - Alamofire (~> 4.4)
+  - Kingfisher (3.10.4)
   - PKHUD (4.2.3)
 
 DEPENDENCIES:
   - Alamofire (from `https://github.com/Alamofire/Alamofire.git`, branch `swift4`)
   - CodableAlamofire (from `https://github.com/Otbivnoe/CodableAlamofire.git`)
+  - Kingfisher (from `https://github.com/onevcat/Kingfisher`, branch `swift4`)
   - PKHUD (from `https://github.com/pkluz/PKHUD.git`, branch `release/swift4`)
 
 EXTERNAL SOURCES:
@@ -15,6 +17,9 @@ EXTERNAL SOURCES:
     :git: https://github.com/Alamofire/Alamofire.git
   CodableAlamofire:
     :git: https://github.com/Otbivnoe/CodableAlamofire.git
+  Kingfisher:
+    :branch: swift4
+    :git: https://github.com/onevcat/Kingfisher
   PKHUD:
     :branch: release/swift4
     :git: https://github.com/pkluz/PKHUD.git
@@ -26,6 +31,9 @@ CHECKOUT OPTIONS:
   CodableAlamofire:
     :commit: 32a155539c25a862aa979c2d4c53090afbafadae
     :git: https://github.com/Otbivnoe/CodableAlamofire.git
+  Kingfisher:
+    :commit: abc208e8609f52058d56f8e8331538c4fcc2b779
+    :git: https://github.com/onevcat/Kingfisher
   PKHUD:
     :commit: 3fb1f5325c3dc50adfe310ca0b859aa18bffd04b
     :git: https://github.com/pkluz/PKHUD.git
@@ -33,8 +41,9 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 4c2bf7fa03c4a626163606de0a417568c270575e
   CodableAlamofire: 14c935ed3fbc51f703da97603147eda24dbe1d49
+  Kingfisher: dbfac2b5dec4a531822e0ba8b571ce6010616075
   PKHUD: 351011b853e6b942e7ee8ad335864cc84c787241
 
-PODFILE CHECKSUM: 83d5a0034e3070419ffed7d8abe50d2c7fd18190
+PODFILE CHECKSUM: 54588853a28f1b73bc0cb8eb458455aef9324a7c
 
 COCOAPODS: 1.3.0.beta.2

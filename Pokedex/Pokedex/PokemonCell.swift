@@ -1,4 +1,4 @@
-//
+///Users/daniel/Desktop/isa-2017-ios-daniel-cuturilo/Pokedex/Pokedex/PokemonDetailsViewController.swift
 //  PokemonCell.swift
 //  Pokedex
 //
@@ -10,6 +10,7 @@ import UIKit
 
 class PokemonCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var pokemonImage: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

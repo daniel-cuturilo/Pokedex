@@ -5,6 +5,7 @@ platform :ios, '11.0'
 def swift4_overrides
     pod 'Alamofire', git: 'https://github.com/Alamofire/Alamofire.git', branch: 'swift4'
     pod 'PKHUD', :git => 'https://github.com/pkluz/PKHUD.git', :branch => 'release/swift4'
+    pod 'Kingfisher', :git => 'https://github.com/onevcat/Kingfisher', branch: 'swift4'
 end
 
 target ‘Pokedex’ do
@@ -14,5 +15,4 @@ target ‘Pokedex’ do
   # Pods for Pokedex
   swift4_overrides
   pod 'CodableAlamofire', :git => 'https://github.com/Otbivnoe/CodableAlamofire.git'
-
 end
