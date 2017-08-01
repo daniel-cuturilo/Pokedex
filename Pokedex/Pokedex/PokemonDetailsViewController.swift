@@ -18,6 +18,8 @@ class PokemonDetailsViewController: UIViewController {
     @IBOutlet weak var pokemonDescription: UITextView!
     @IBOutlet weak var pokemonName: UILabel!
     @IBOutlet weak var pokemonImage: UIImageView!
+    @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var dislikeButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()

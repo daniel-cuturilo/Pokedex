@@ -170,6 +170,8 @@ extension HomeViewController: UITableViewDataSource {
         
         let pokemon = pokemons[indexPath.row]
         cell.label.text = pokemon.name
+        cell.creationDateLabel.text = pokemon.createdAt
+        cell.totalVoteCountLabel.text = String(describing: pokemon.totalVoteCount)
         guard let imageURL = pokemon.attributes.imageURL else { return cell }
         let url = URL(string: "https://pokeapi.infinum.co" + imageURL)
         cell.pokemonImage.kf.setImage(with: url)
@@ -201,7 +203,8 @@ extension HomeViewController: UITableViewDelegate {
 extension HomeViewController: NewPokemonDelegate {
     func setNewPokemon(_ pokemon: Pokemon?) {
         guard let pokemon = pokemon else { return }
-        pokemons.append(pokemon)
+        pokemons.insert(pokemon, at: 0)
+        //pokemons.append(pokemon)
     }
 }
 

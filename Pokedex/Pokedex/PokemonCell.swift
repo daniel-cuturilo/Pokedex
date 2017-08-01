@@ -11,6 +11,14 @@ import UIKit
 class PokemonCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var pokemonImage: UIImageView!
+    @IBOutlet weak var creationDateLabel: UILabel!
+    @IBOutlet weak var totalVoteCountLabel: UILabel!
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.pokemonImage.layer.cornerRadius = self.pokemonImage.bounds.size.width / 2.0
+        self.pokemonImage.clipsToBounds = true
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

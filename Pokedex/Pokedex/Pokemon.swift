@@ -19,9 +19,13 @@ struct Pokemon: Codable {
         let weight: Float
         let gender: String
         let description: String
+        let createdAt: String
+        let totalVoteCount: Int
         
         enum CodingKeys: String, CodingKey {
             case imageURL = "image-url"
+            case createdAt = "created-at"
+            case totalVoteCount = "total-vote-count"
             case name
             case gender
             case height
@@ -37,6 +41,6 @@ struct Pokemon: Codable {
     var weight: Float  { return attributes.weight }
     var gender: String  { return attributes.gender }
     var description: String  { return attributes.description }
-    
-    
+    var createdAt: String { return attributes.createdAt}
+    var totalVoteCount: Int { return attributes.totalVoteCount}
 }
