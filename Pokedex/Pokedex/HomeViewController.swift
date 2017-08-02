@@ -16,6 +16,8 @@ class HomeViewController: UIViewController {
     var pokemon: Pokemon?
     var pokemons = [Pokemon]()
     
+    @IBOutlet weak var toggleSort: UISegmentedControl!
+    
     @IBOutlet weak var tableView: UITableView! {
         didSet {
             tableView.delegate = self
@@ -26,7 +28,6 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if (pokemons.count > 0) {
-            //orderPokemonsAlphabetically()
             self.tableView.reloadData()
         }
     }
@@ -55,6 +56,22 @@ class HomeViewController: UIViewController {
         print(user)
         
         getPokemons()
+    }
+    
+    @IBAction func segmentedControlIndexChanged(_ sender: Any) {
+        switch toggleSort.selectedSegmentIndex {
+        case 0:
+            pokemons.sort { $0.createdAt > $1.createdAt }
+            self.tableView.reloadData()
+        case 1:
+            pokemons.sort { $0.totalVoteCount > $1.totalVoteCount }
+            self.tableView.reloadData()
+        case 2:
+            pokemons.sort { $0.name.lowercased() < $1.name.lowercased() }
+            self.tableView.reloadData()
+        default:
+            break
+        }
     }
     
     // correct?
@@ -118,18 +135,11 @@ class HomeViewController: UIViewController {
                 switch response.result {
                 case .success(let pokemons):
                     strongSelf.pokemons = pokemons
-                    //print(pokemons)
-                    //pokemons.sort
-                    //strongSelf.orderPokemonsAlphabetically()
                     strongSelf.tableView.reloadData()
                 case .failure(let error):
                     print("FAILURE: \(error)")
                 }
         }
-    }
-    
-    func orderPokemonsAlphabetically() {
-        pokemons = pokemons.sorted(by: { $0.name.lowercased() < $1.name.lowercased() })
     }
     
     override func didReceiveMemoryWarning() {
@@ -169,16 +179,27 @@ extension HomeViewController: UITableViewDataSource {
         cell.pokemonImage?.kf.cancelDownloadTask()
         
         let pokemon = pokemons[indexPath.row]
-        cell.label.text = pokemon.name
-        cell.creationDateLabel.text = pokemon.createdAt
-        cell.totalVoteCountLabel.text = String(describing: pokemon.totalVoteCount)
+        let date = convertDate(date: pokemon.createdAt)
         guard let imageURL = pokemon.attributes.imageURL else { return cell }
         let url = URL(string: "https://pokeapi.infinum.co" + imageURL)
+        
+        cell.label.text = pokemon.name
+        cell.creationDateLabel.text = date
+        cell.totalVoteCountLabel.text = String(describing: pokemon.totalVoteCount)
         cell.pokemonImage.kf.setImage(with: url)
         
         //cell.contentView.backgroundColor = indexPath.row % 2 == 0 ? UIColor.red : UIColor.white
         
         return cell
+    }
+    
+    func convertDate(date: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        guard let date = dateFormatter.date(from: date) else { return "" }
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        let convertedDate = dateFormatter.string(from: date)
+        return convertedDate
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
