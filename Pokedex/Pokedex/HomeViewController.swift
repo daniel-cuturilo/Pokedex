@@ -113,6 +113,8 @@ class HomeViewController: UIViewController {
                 guard let strongSelf = self else { return }
                 switch response.result {
                 case .success:
+                    UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+                    UserDefaults.standard.synchronize()
                     let bundle = Bundle.main
                     let storyboard = UIStoryboard(name: "Main", bundle: bundle)
                     let loginViewController = storyboard.instantiateViewController(withIdentifier: "LoginViewController")

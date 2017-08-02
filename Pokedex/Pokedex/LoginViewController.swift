@@ -19,11 +19,22 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     
+    let defaults:UserDefaults = UserDefaults.standard
+    
     var willShowKeyboardNotification: NSObjectProtocol!
     var willHideKeyboardNotification: NSObjectProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        if let email:String = defaults.string(forKey: "email") {
+            if let password:String = defaults.string(forKey: "password") {
+                print(email + "   " + password)
+                self.loginRequest(email: email, password: password)
+            }
+        }
+        
         
         // Do any additional setup after loading the view.
         loginButton.setTitle("Login", for:UIControlState.normal)
@@ -78,7 +89,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
             !password.isEmpty
             else {
                 return
-            }
+        }
+        
+        loginRequest(email: email, password: password)
+    }
+        
+    func loginRequest (email: String, password: String) {
         
         let params = [
             "data": [
@@ -89,7 +105,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
                 ]
             ]
         ]
-        
         
         Alamofire
             .request(
@@ -103,6 +118,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
                 switch response.result {
                 case .success(let user):
                     //print("DECODED: \(user)")
+                    self?.defaults.set(password, forKey: "password")
+                    self?.defaults.set(email, forKey: "email")
                     self?.showSuccess()
                     let bundle = Bundle.main
                     let storyboard = UIStoryboard(name: "Main", bundle: bundle)
@@ -119,7 +136,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
                 }
         }
     }
-
+        
     
     @IBAction func registerButtonActionHandler(_ sender: Any) {
             let bundle = Bundle.main
