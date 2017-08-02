@@ -10,11 +10,15 @@ import UIKit
 import Alamofire
 import CodableAlamofire
 import Kingfisher
+import PKHUD
 
 class HomeViewController: UIViewController {
     var user: User?
     var pokemon: Pokemon?
     var pokemons = [Pokemon]()
+    var lastClickedRow = Int()
+    
+    lazy var refreshControl = UIRefreshControl()
     
     @IBOutlet weak var toggleSort: UISegmentedControl!
     
@@ -35,6 +39,9 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.allowsSelection = true
+        
+        refreshControl.addTarget(self, action: #selector(self.handleRefresh(refreshControl:)), for: UIControlEvents.valueChanged)
+        tableView.refreshControl = refreshControl
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             image: UIImage(named: "ic-logout"),
@@ -59,19 +66,21 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func segmentedControlIndexChanged(_ sender: Any) {
+        selectedSegmentIndexAction()
+    }
+    
+    func selectedSegmentIndexAction () {
         switch toggleSort.selectedSegmentIndex {
         case 0:
             pokemons.sort { $0.createdAt > $1.createdAt }
-            self.tableView.reloadData()
         case 1:
             pokemons.sort { $0.totalVoteCount > $1.totalVoteCount }
-            self.tableView.reloadData()
         case 2:
             pokemons.sort { $0.name.lowercased() < $1.name.lowercased() }
-            self.tableView.reloadData()
         default:
             break
         }
+        self.tableView.reloadData()
     }
     
     // correct?
@@ -135,17 +144,33 @@ class HomeViewController: UIViewController {
                 switch response.result {
                 case .success(let pokemons):
                     strongSelf.pokemons = pokemons
-                    strongSelf.tableView.reloadData()
+                    switch strongSelf.toggleSort.selectedSegmentIndex {
+                    case 0:
+                        strongSelf.pokemons = pokemons.sorted { $0.createdAt > $1.createdAt }
+                    case 1:
+                        strongSelf.pokemons = pokemons.sorted { $0.totalVoteCount > $1.totalVoteCount }
+                    case 2:
+                        strongSelf.pokemons = pokemons.sorted { $0.name.lowercased() < $1.name.lowercased() }
+                    default:
+                        break
+                    }
+                   strongSelf.tableView.reloadData()
                 case .failure(let error):
                     print("FAILURE: \(error)")
                 }
         }
     }
     
+    @objc func handleRefresh(refreshControl: UIRefreshControl) {
+        getPokemons()
+        refreshControl.endRefreshing()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
 }
 
 // MARK: - TableView -
@@ -180,12 +205,13 @@ extension HomeViewController: UITableViewDataSource {
         
         let pokemon = pokemons[indexPath.row]
         let date = convertDate(date: pokemon.createdAt)
-        guard let imageURL = pokemon.attributes.imageURL else { return cell }
-        let url = URL(string: "https://pokeapi.infinum.co" + imageURL)
         
         cell.label.text = pokemon.name
         cell.creationDateLabel.text = date
         cell.totalVoteCountLabel.text = String(describing: pokemon.totalVoteCount)
+        
+        guard let imageURL = pokemon.attributes.imageURL else { return cell }
+        let url = URL(string: "https://pokeapi.infinum.co" + imageURL)
         cell.pokemonImage.kf.setImage(with: url)
         
         //cell.contentView.backgroundColor = indexPath.row % 2 == 0 ? UIColor.red : UIColor.white
@@ -209,9 +235,13 @@ extension HomeViewController: UITableViewDataSource {
         /* let row = indexPath.row
         print("Row: \(row)") */
         
+        lastClickedRow = indexPath.row
+        
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let pokemonDetailsViewController = storyboard.instantiateViewController(withIdentifier: "PokemonDetailsViewController") as! PokemonDetailsViewController
         pokemonDetailsViewController.pokemon = pokemons[indexPath.row]
+        pokemonDetailsViewController.user = user
+        pokemonDetailsViewController.delegate = self
         self.navigationController?.pushViewController(pokemonDetailsViewController, animated: true)
     }
     
@@ -226,6 +256,15 @@ extension HomeViewController: NewPokemonDelegate {
         guard let pokemon = pokemon else { return }
         pokemons.insert(pokemon, at: 0)
         //pokemons.append(pokemon)
+    }
+}
+
+// update pokemon according to actions in PokemonDetailsViewController (like, dislike)
+extension HomeViewController: PokemonDetailsViewControllerDelegate {
+    func updatePokemon (_ pokemon: Pokemon?) {
+        guard let pokemon = pokemon else { return }
+        pokemons[lastClickedRow] = pokemon
+        selectedSegmentIndexAction()
     }
 }
 

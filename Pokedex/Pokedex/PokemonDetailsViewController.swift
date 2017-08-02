@@ -8,9 +8,17 @@
 
 import UIKit
 import Kingfisher
+import Alamofire
+import CodableAlamofire
+import PKHUD
 
 class PokemonDetailsViewController: UIViewController {
     var pokemon: Pokemon?
+    var user: User?
+    var likePressed: Bool?
+    var dislikePressed: Bool?
+    
+    weak var delegate: PokemonDetailsViewControllerDelegate?
     
     @IBOutlet weak var heightLabel: UILabel!
     @IBOutlet weak var genderLabel: UILabel!
@@ -20,6 +28,59 @@ class PokemonDetailsViewController: UIViewController {
     @IBOutlet weak var pokemonImage: UIImageView!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var dislikeButton: UIButton!
+    
+    @IBAction func dislikeButtonActionHandler(_ sender: Any) {
+        guard let user = user else { return }
+        guard let pokemon = pokemon else { return }
+        let tokenString = "Token token=" + user.authToken + ", email=" + user.email
+        let headers =  ["Authorization": tokenString]
+        print(pokemon)
+        Alamofire
+            .request(
+                "https://pokeapi.infinum.co/api/v1/pokemons/" + pokemon.id + "/downvote",
+                method: .post,
+                headers: headers
+            )
+            .validate()
+            .responseDecodableObject(keyPath: "data") { [weak self] (response: DataResponse<Pokemon>) in
+                guard let strongSelf = self else { return }
+                switch response.result {
+                case .success(let pokemon):
+                    strongSelf.pokemon = pokemon
+                    strongSelf.delegate?.updatePokemon(pokemon)
+                    print("Disliked")
+                    print(pokemon)
+                case .failure(let error):
+                    print("FAILURE: \(error)")
+                }
+        }
+    }
+    
+    @IBAction func likeButtonActionHandler(_ sender: Any) {
+        guard let user = user else { return }
+        guard let pokemon = pokemon else { return }
+        let tokenString = "Token token=" + user.authToken + ", email=" + user.email
+        let headers =  ["Authorization": tokenString]
+        print(pokemon)
+        Alamofire
+            .request(
+                "https://pokeapi.infinum.co/api/v1/pokemons/" + pokemon.id + "/upvote",
+                method: .post,
+                headers: headers
+            )
+            .responseDecodableObject(keyPath: "data") { [weak self] (response: DataResponse<Pokemon>) in
+                guard let strongSelf = self else { return }
+                switch response.result {
+                case .success(let pokemon):
+                    strongSelf.pokemon = pokemon
+                    strongSelf.delegate?.updatePokemon(pokemon)
+                    print("Liked")
+                    print(pokemon)
+                case .failure(let error):
+                    print("FAILURE: \(error)")
+                }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,4 +118,8 @@ class PokemonDetailsViewController: UIViewController {
     }
     */
 
+}
+
+protocol PokemonDetailsViewControllerDelegate: class {
+    func updatePokemon(_ pokemon: Pokemon?)
 }

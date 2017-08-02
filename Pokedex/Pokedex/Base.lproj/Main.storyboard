@@ -649,6 +649,9 @@
                                                     <constraint firstAttribute="height" constant="56" id="rAc-tN-01v"/>
                                                 </constraints>
                                                 <state key="normal" title="Button" image="ic-like"/>
+                                                <connections>
+                                                    <action selector="likeButtonActionHandler:" destination="IuT-qS-T7h" eventType="touchUpInside" id="VRU-rc-cnc"/>
+                                                </connections>
                                             </button>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" text="Dislike" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jar-RC-RbT">
                                                 <rect key="frame" x="192" y="586.5" width="47" height="17"/>
@@ -667,6 +670,9 @@
                                                     <constraint firstAttribute="height" constant="56" id="cR5-Z8-kfw"/>
                                                 </constraints>
                                                 <state key="normal" title="Button" image="ic-dislike"/>
+                                                <connections>
+                                                    <action selector="dislikeButtonActionHandler:" destination="IuT-qS-T7h" eventType="touchUpInside" id="Rbg-ZE-bgE"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
