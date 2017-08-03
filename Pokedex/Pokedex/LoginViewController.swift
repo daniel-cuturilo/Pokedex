@@ -30,6 +30,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -40,8 +43,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
+        self.navigationController?.navigationBar.barTintColor = UIColor.white
         
         if let email:String = defaults.string(forKey: "email") {
             if let password:String = defaults.string(forKey: "password") {
@@ -251,7 +253,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
     
     func animatePasswordColorChange() {
         UIView.animate(
-            withDuration: 1.0,
+            withDuration: 0.5,
             delay: 0.3,
             options: [.autoreverse, .curveEaseInOut],
             animations: {
@@ -264,7 +266,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
     
     func animateUserNameColorChange() {
         UIView.animate(
-            withDuration: 1.0,
+            withDuration: 0.5,
             delay: 0.3,
             options: [.autoreverse, .curveEaseInOut],
             animations: {

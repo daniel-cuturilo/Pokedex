@@ -77,12 +77,11 @@ class RegisterViewController: UIViewController, Progressable {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         setTextFieldIcons()
     }
     
-        
     func setTextFieldIcons () {
         let iconWidth = 24
         let iconHeight = 24

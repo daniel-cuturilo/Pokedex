@@ -245,7 +245,7 @@ extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
-        cell?.contentView.backgroundColor = UIColor.blue.withAlphaComponent(0.6)
+        cell?.contentView.backgroundColor = UIColor.blue.withAlphaComponent(0.75)
         cell?.backgroundColor = UIColor.blue
     }
     

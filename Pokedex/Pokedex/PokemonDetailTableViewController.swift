@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import CodableAlamofire
 import Kingfisher
+import PopupDialog
 
 class PokemonDetailTableViewController: UITableViewController, DateConverter, Progressable, UITextFieldDelegate {
     var pokemon: Pokemon?
@@ -127,6 +128,7 @@ class PokemonDetailTableViewController: UITableViewController, DateConverter, Pr
     
     @IBAction func likeButtonActionHandler(_ sender: Any) {
         likeRequest()
+        //likeAnimation()
     }
     
     @IBAction func dislikeButtonActionHandler(_ sender: Any) {
@@ -359,7 +361,7 @@ private func processUploadRequest(_ uploadRequest: UploadRequest) {
             cell.layer.transform = CATransform3DIdentity
         }, completion: nil)
     }
-
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
