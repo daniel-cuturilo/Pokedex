@@ -223,7 +223,6 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         tableView.deselectRow(at: indexPath, animated: true)
         
         /* let row = indexPath.row
@@ -238,6 +237,39 @@ extension HomeViewController: UITableViewDataSource {
         pokemonDetailTableViewController.delegate = self
         self.navigationController?.pushViewController(pokemonDetailTableViewController, animated: true)
         
+    }
+    
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.contentView.backgroundColor = UIColor.blue.withAlphaComponent(0.6)
+        cell?.backgroundColor = UIColor.blue
+    }
+    
+    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        cell?.contentView.backgroundColor = UIColor.white
+        cell?.backgroundColor = UIColor.white
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        animateIn(cell: cell, withDelay: 0.07)
+            
+    }
+    
+    func animateIn(cell: UITableViewCell, withDelay delay: TimeInterval) {
+        let initialScale: CGFloat = 1.2
+        let duration: TimeInterval = 0.5
+        
+        cell.alpha = 0.0
+        cell.layer.transform = CATransform3DMakeScale(initialScale, initialScale, 1)
+        UIView.animate(withDuration: duration, delay: delay, options: UIViewAnimationOptions.curveEaseOut, animations: {
+            cell.alpha = 1.0
+            cell.layer.transform = CATransform3DIdentity
+        }, completion: nil)
     }
     
 }

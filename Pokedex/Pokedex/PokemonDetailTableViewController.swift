@@ -11,12 +11,15 @@ import Alamofire
 import CodableAlamofire
 import Kingfisher
 
-class PokemonDetailTableViewController: UITableViewController, DateConverter, Progressable {
+class PokemonDetailTableViewController: UITableViewController, DateConverter, Progressable, UITextFieldDelegate {
     var pokemon: Pokemon?
     var user: User?
     var comments = Comment(data: [], included: [])
     var likePressed: Bool?
     var dislikePressed: Bool?
+    var shouldAnimateFirstRow = false
+    
+    var keyboardDismissTapGesture: UIGestureRecognizer?
     
     weak var delegate: PokemonDetailTableViewControllerDelegate?
     
@@ -35,6 +38,7 @@ class PokemonDetailTableViewController: UITableViewController, DateConverter, Pr
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         guard let pokemon = pokemon else { return }
         heightLabel.text = String(describing: pokemon.height)
         genderLabel.text = pokemon.gender
@@ -44,8 +48,46 @@ class PokemonDetailTableViewController: UITableViewController, DateConverter, Pr
         setImage()
         getComments()
         
+        commentTextField.delegate = self
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+        super.viewWillDisappear(animated)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if keyboardDismissTapGesture == nil {
+            keyboardDismissTapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+            self.view.addGestureRecognizer(keyboardDismissTapGesture!)
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if keyboardDismissTapGesture != nil {
+            self.view.removeGestureRecognizer(keyboardDismissTapGesture!)
+            keyboardDismissTapGesture = nil
+        }
+    }
+    
+    @objc func dismissKeyboard(sender: AnyObject) {
+        commentTextField?.resignFirstResponder()
     }
     
     override func viewDidLayoutSubviews() {
@@ -122,12 +164,17 @@ class PokemonDetailTableViewController: UITableViewController, DateConverter, Pr
                                 switch response.result {
                                 case .success(let comment):
                                     print("DECODED: \(comment)")
+                                    strongSelf.tableView.beginUpdates()
                                     let commentsSize = strongSelf.getCommentsSize()
                                     strongSelf.comments.data.insert(comment.data, at: commentsSize)
                                     strongSelf.comments.included.insert(comment.included[0], at: 0)
+                                    let indexPath = IndexPath(row: commentsSize, section: 0)
+                                    strongSelf.tableView.insertRows(at: [indexPath], with: .none)
+                                    strongSelf.tableViewScrollToBottom(animated: true)
+                                    strongSelf.tableView.endUpdates()
                                     strongSelf.showSuccess()
-                                    strongSelf.tableView.reloadData()
                                     alertController.dismiss(animated: true, completion: nil)
+                                    
                                 case .failure(let error):
                                     print("FAILURE: \(error)")
                                     self?.showFailure()
@@ -153,6 +200,18 @@ class PokemonDetailTableViewController: UITableViewController, DateConverter, Pr
             self.present(alertController, animated: true, completion: nil)
         } else {
             //...
+        }
+    }
+    
+    func tableViewScrollToBottom(animated: Bool) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(300)) {
+            let numberOfSections = self.tableView.numberOfSections
+            let numberOfRows = self.tableView.numberOfRows(inSection: numberOfSections-1)
+            
+            if numberOfRows > 0 {
+                let indexPath = IndexPath(row: numberOfRows-1, section: (numberOfSections-1))
+                self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: animated)
+            }
         }
     }
     
@@ -284,6 +343,22 @@ private func processUploadRequest(_ uploadRequest: UploadRequest) {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        animateIn(cell: cell, withDelay: 0.1)
+        
+    }
+    
+    func animateIn(cell: UITableViewCell, withDelay delay: TimeInterval) {
+        let initialScale: CGFloat = 1.2
+        let duration: TimeInterval = 0.5
+        
+        cell.alpha = 0.0
+        cell.layer.transform = CATransform3DMakeScale(initialScale, initialScale, 1)
+        UIView.animate(withDuration: duration, delay: delay, options: UIViewAnimationOptions.curveEaseOut, animations: {
+            cell.alpha = 1.0
+            cell.layer.transform = CATransform3DIdentity
+        }, completion: nil)
+    }
 
     /*
     // Override to support conditional editing of the table view.

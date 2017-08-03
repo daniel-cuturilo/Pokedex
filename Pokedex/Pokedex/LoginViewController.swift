@@ -18,6 +18,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var logo: UIImageView!
+    @IBOutlet weak var logoImage: UIImageView!
     
     var keyboardDismissTapGesture: UIGestureRecognizer?
     let defaults:UserDefaults = UserDefaults.standard
@@ -27,6 +29,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -58,6 +61,56 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    @IBAction func userNameTextFieldEditingDidEnd(_ sender: Any) {
+        guard let email = userNameTextField.text,
+            let password = passwordTextField.text,
+            !email.isEmpty,
+            !password.isEmpty
+            else {
+                return
+        }
+        if (validatePassword(text: password)) {
+            if (validateUserName(text: email)) {
+                animateColorChange()
+            }
+        } else {
+            return
+        }
+    }
+    
+    func validatePassword(text: String) -> Bool {
+        let characters = text.characters.count
+        if (characters > 8) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    // might be edited...
+    func validateUserName(text: String) -> Bool {
+        var result = false
+        result = text.characters.contains { ["@"].contains($0) }
+        return result
+    }
+    
+    @IBAction func passwordTextFieldEditingDidEnd(_ sender: Any) {
+        guard let email = userNameTextField.text,
+            let password = passwordTextField.text,
+            !email.isEmpty,
+            !password.isEmpty
+            else {
+                return
+        }
+        if (validateUserName(text: email)) {
+            if (validatePassword(text: password)) {
+                animateColorChange()
+            }
+        } else {
+            return
+        }
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -92,16 +145,23 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
         scrollView.scrollIndicatorInsets = scrollView.contentInset
     }
     
-    @IBAction func loginButtonActionHandler(_ sender: Any) {
+    @IBAction func loginButtonActionHandler(_ sender: UITextField) {
         
         // print("Username: " + userName +  " -- " + "Password: " + password)
         
-        guard
-            let email = userNameTextField.text,
-            let password = passwordTextField.text,
-            !email.isEmpty,
+        guard let email = userNameTextField.text,
+            !email.isEmpty
+            else {
+                //animatePulse(userNameTextField)
+                animateUserNameColorChange()
+                return
+        }
+        
+        guard let password = passwordTextField.text,
             !password.isEmpty
             else {
+                //animatePulse(passwordTextField)
+                animatePasswordColorChange()
                 return
         }
         
@@ -147,6 +207,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
                     let alertController = UIAlertController(title: "Login not successful.", message: "Wrong username or password. Try again.", preferredStyle: .alert)
                     alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default,handler: nil))
                     self?.present(alertController, animated: true, completion: nil)
+                    self?.userNameTextField.text = ""
+                    self?.passwordTextField.text = ""
                 }
         }
     }
@@ -167,6 +229,66 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
                 self.navigationController?.pushViewController(registerViewController, animated: true)
             } */
     }
+    
+    // MARK: Animations
+    /*
+    func animatePulse(_ sender: UITextField) {
+        sender.isSelected = !sender.isSelected
+        if sender.isSelected {
+            let pulse = CASpringAnimation(keyPath: "transform.scale")
+            pulse.duration = 0.3
+            pulse.fromValue = 0.97
+            pulse.toValue = 1.03
+            pulse.autoreverses = true
+            pulse.repeatCount = 1
+            pulse.initialVelocity = 1
+            pulse.damping = 1.0
+            sender.layer.add(pulse, forKey: "pulse")
+        } else {
+            sender.layer.removeAnimation(forKey: "pulse")
+        }
+    } */
+    
+    func animatePasswordColorChange() {
+        UIView.animate(
+            withDuration: 1.0,
+            delay: 0.3,
+            options: [.autoreverse, .curveEaseInOut],
+            animations: {
+                self.passwordTextField.backgroundColor = UIColor.red.withAlphaComponent(0.3)
+        },
+            completion: { (finished) in
+                self.passwordTextField.backgroundColor = UIColor.white
+        })
+    }
+    
+    func animateUserNameColorChange() {
+        UIView.animate(
+            withDuration: 1.0,
+            delay: 0.3,
+            options: [.autoreverse, .curveEaseInOut],
+            animations: {
+                self.userNameTextField.backgroundColor = UIColor.red.withAlphaComponent(0.3)
+        },
+            completion: { (finished) in
+                self.userNameTextField.backgroundColor = UIColor.white
+        })
+    }
+    
+    func animateColorChange() {
+        let color: UIColor = self.loginButton.backgroundColor!
+        UIView.animate(
+            withDuration: 1.2,
+            delay: 0.4,
+            options: [.autoreverse, .curveEaseInOut],
+            animations: {
+                self.loginButton.backgroundColor = UIColor.green.withAlphaComponent(0.6)
+        },
+            completion: { (finished) in
+                self.loginButton.backgroundColor = color
+        })
+    }
+    
     
     func setTextFieldIcons () {
         let iconWidth = 24
