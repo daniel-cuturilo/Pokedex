@@ -334,7 +334,7 @@
                                     <segment title="Likes"/>
                                     <segment title="A-Z"/>
                                 </segments>
-                                <color key="tintColor" red="0.20000000000000001" green="0.59999999999999998" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="0.16389550580000001" green="0.29084528679999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="segmentedControlIndexChanged:" destination="7h0-SW-0Gg" eventType="valueChanged" id="mfm-Dl-irA"/>
                                 </connections>
@@ -348,10 +348,11 @@
                             <constraint firstItem="Vut-F2-c6Z" firstAttribute="leading" secondItem="EMw-hR-NNa" secondAttribute="leading" id="Kdt-rM-Ujz"/>
                             <constraint firstItem="Vut-F2-c6Z" firstAttribute="trailing" secondItem="EMw-hR-NNa" secondAttribute="trailing" id="KlS-Qa-IYp"/>
                             <constraint firstItem="Vut-F2-c6Z" firstAttribute="bottom" secondItem="EMw-hR-NNa" secondAttribute="bottom" id="Qbe-xE-2CG"/>
+                            <constraint firstItem="Rft-06-QPL" firstAttribute="leading" secondItem="EMw-hR-NNa" secondAttribute="leading" constant="16" id="ShS-IX-TEf"/>
                             <constraint firstItem="SLc-cR-gkz" firstAttribute="centerX" secondItem="EMw-hR-NNa" secondAttribute="centerX" constant="32.5" id="lMD-o8-Edx"/>
-                            <constraint firstItem="EMw-hR-NNa" firstAttribute="trailing" secondItem="Rft-06-QPL" secondAttribute="trailing" constant="253" id="lV9-Jz-Nxa"/>
                             <constraint firstItem="Rft-06-QPL" firstAttribute="top" secondItem="vLX-sj-yvJ" secondAttribute="topMargin" constant="14" id="n4Y-hu-wmn"/>
                             <constraint firstItem="SLc-cR-gkz" firstAttribute="top" secondItem="EMw-hR-NNa" secondAttribute="top" constant="10" id="rA8-nr-iM8"/>
+                            <constraint firstItem="EMw-hR-NNa" firstAttribute="trailing" secondItem="SLc-cR-gkz" secondAttribute="trailing" constant="16" id="wwT-tp-EjJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="EMw-hR-NNa"/>
                     </view>

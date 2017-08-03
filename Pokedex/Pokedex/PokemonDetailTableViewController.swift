@@ -10,7 +10,6 @@ import UIKit
 import Alamofire
 import CodableAlamofire
 import Kingfisher
-import PopupDialog
 
 class PokemonDetailTableViewController: UITableViewController, DateConverter, Progressable, UITextFieldDelegate {
     var pokemon: Pokemon?
@@ -18,6 +17,8 @@ class PokemonDetailTableViewController: UITableViewController, DateConverter, Pr
     var comments = Comment(data: [], included: [])
     var likePressed: Bool?
     var dislikePressed: Bool?
+    let alertController = UIAlertController(title: "Add New Comment", message: "", preferredStyle: .alert)
+    
     var shouldAnimateFirstRow = false
     
     var keyboardDismissTapGesture: UIGestureRecognizer?
@@ -36,9 +37,18 @@ class PokemonDetailTableViewController: UITableViewController, DateConverter, Pr
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var rectangle: UIImageView!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        imageView.alpha = 0
+        UIView.animate(withDuration: 1.0) {
+            self.imageView.alpha = 1
+        }
+        
+        UIView.animate(withDuration: 0.75, delay: 0, options: [.curveEaseOut], animations: {
+            self.pokemonDescription.center.y -= self.view.bounds.height - 625
+        }, completion: nil)
+        
         
         guard let pokemon = pokemon else { return }
         heightLabel.text = String(describing: pokemon.height)
@@ -48,6 +58,8 @@ class PokemonDetailTableViewController: UITableViewController, DateConverter, Pr
         pokemonName.text = pokemon.name
         setImage()
         getComments()
+        setTextViewSize()
+        self.view.layoutIfNeeded()
         
         commentTextField.delegate = self
         
@@ -60,6 +72,7 @@ class PokemonDetailTableViewController: UITableViewController, DateConverter, Pr
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
         
     }
     
@@ -91,6 +104,7 @@ class PokemonDetailTableViewController: UITableViewController, DateConverter, Pr
         commentTextField?.resignFirstResponder()
     }
     
+    
     override func viewDidLayoutSubviews() {
         setTextViewSize()
     }
@@ -114,6 +128,7 @@ class PokemonDetailTableViewController: UITableViewController, DateConverter, Pr
             newFrameRectangle.size = CGSize(width: rectangle.frame.size.width, height: pokemonDescription.frame.size.height + pokemonName.frame.size.height - 15)
         }
         rectangle.frame = newFrameRectangle
+        self.view.layoutIfNeeded()
     }
     
     func setImage() {
@@ -141,51 +156,12 @@ class PokemonDetailTableViewController: UITableViewController, DateConverter, Pr
             let alertController = UIAlertController(title: "Add New Comment", message: "", preferredStyle: .alert)
             
             let saveAction = UIAlertAction(title: "Save", style: .default, handler: { [weak self] alert -> Void in
-                guard let strongSelf = self else { return }
                 let textField = alertController.textFields![0] as UITextField
-                
-                guard let user = strongSelf.user else { return }
-                guard let pokemon = strongSelf.pokemon else { return }
-                let tokenString = "Token token=" + user.authToken + ", email=" + user.email
-                let headers =  ["Authorization": tokenString]
-                let attributes = [
-                    "content": textField.text
-                ]
-                let URL = "https://pokeapi.infinum.co//api/v1/pokemons/" + pokemon.id + "/comments"
-                
-                Alamofire
-                    .upload(multipartFormData: { multipartFormData in
-                        for (key, value) in attributes {
-                            multipartFormData.append((value?.data(using: .utf8)!)!, withName: "data[attributes][" + key + "]")
-                        }
-                    }, to: URL, method: .post, headers: headers) { [weak self] result in
-                        switch result {
-                        case .success(let uploadRequest, _, _):
-                            uploadRequest.responseDecodableObject { [weak self] (response: DataResponse<PostedComment>) in
-                                guard let strongSelf = self else { return }
-                                switch response.result {
-                                case .success(let comment):
-                                    print("DECODED: \(comment)")
-                                    strongSelf.tableView.beginUpdates()
-                                    let commentsSize = strongSelf.getCommentsSize()
-                                    strongSelf.comments.data.insert(comment.data, at: commentsSize)
-                                    strongSelf.comments.included.insert(comment.included[0], at: 0)
-                                    let indexPath = IndexPath(row: commentsSize, section: 0)
-                                    strongSelf.tableView.insertRows(at: [indexPath], with: .none)
-                                    strongSelf.tableViewScrollToBottom(animated: true)
-                                    strongSelf.tableView.endUpdates()
-                                    strongSelf.showSuccess()
-                                    alertController.dismiss(animated: true, completion: nil)
-                                    
-                                case .failure(let error):
-                                    print("FAILURE: \(error)")
-                                    self?.showFailure()
-                                }
-                            }
-                        case .failure(let encodingError):
-                            print(encodingError)
-                        }
+                guard let text = textField.text else {
+                    return
                 }
+                self?.newCommentRequest(text: text)
+                self?.alertController.dismiss(animated: true, completion: nil)
             })
             
             let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
@@ -201,7 +177,11 @@ class PokemonDetailTableViewController: UITableViewController, DateConverter, Pr
             
             self.present(alertController, animated: true, completion: nil)
         } else {
-            //...
+            guard let text = commentTextField.text else {
+                return
+            }
+            self.newCommentRequest(text: text)
+            commentTextField.text = ""
         }
     }
     
@@ -248,6 +228,49 @@ private func processUploadRequest(_ uploadRequest: UploadRequest) {
     
     func getCommentsSize() -> Int {
         return self.comments.data.count
+    }
+    
+    func newCommentRequest (text: String) {
+        guard let user = user else { return }
+        guard let pokemon = self.pokemon else { return }
+        let tokenString = "Token token=" + user.authToken + ", email=" + user.email
+        let headers =  ["Authorization": tokenString]
+        let attributes = [
+            "content": text
+        ]
+        let URL = "https://pokeapi.infinum.co//api/v1/pokemons/" + pokemon.id + "/comments"
+        
+        Alamofire
+            .upload(multipartFormData: { multipartFormData in
+                for (key, value) in attributes {
+                    multipartFormData.append((value.data(using: .utf8)!), withName: "data[attributes][" + key + "]")
+                }
+            }, to: URL, method: .post, headers: headers) { [weak self] result in
+                switch result {
+                case .success(let uploadRequest, _, _):
+                    uploadRequest.responseDecodableObject { [weak self] (response: DataResponse<PostedComment>) in
+                        guard let strongSelf = self else { return }
+                        switch response.result {
+                        case .success(let comment):
+                            print("DECODED: \(comment)")
+                            strongSelf.tableView.beginUpdates()
+                            let commentsSize = strongSelf.getCommentsSize()
+                            strongSelf.comments.data.insert(comment.data, at: commentsSize)
+                            strongSelf.comments.included.insert(comment.included[0], at: 0)
+                            let indexPath = IndexPath(row: commentsSize, section: 0)
+                            strongSelf.tableView.insertRows(at: [indexPath], with: .none)
+                            strongSelf.tableViewScrollToBottom(animated: true)
+                            strongSelf.tableView.endUpdates()
+                            strongSelf.showSuccess()
+                        case .failure(let error):
+                            print("FAILURE: \(error)")
+                            self?.showFailure()
+                        }
+                    }
+                case .failure(let encodingError):
+                    print(encodingError)
+                }
+        }
     }
     
     func likeRequest () {
