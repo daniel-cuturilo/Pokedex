@@ -19,14 +19,26 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
     @IBOutlet weak var registerButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     
+    var keyboardDismissTapGesture: UIGestureRecognizer?
     let defaults:UserDefaults = UserDefaults.standard
     
-    var willShowKeyboardNotification: NSObjectProtocol!
-    var willHideKeyboardNotification: NSObjectProtocol!
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+        super.viewWillDisappear(animated)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(adjustForKeyboard), name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
         
         if let email:String = defaults.string(forKey: "email") {
             if let password:String = defaults.string(forKey: "password") {
@@ -35,33 +47,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
             }
         }
         
-        
-        // Do any additional setup after loading the view.
         loginButton.setTitle("Login", for:UIControlState.normal)
         registerButton.setTitle("Sign up", for:UIControlState.normal)
         setTextFieldIcons()
-        
-        // NEEDS TO BE FIXED!!
-        willShowKeyboardNotification = NotificationCenter
-            .default
-            .addObserver(forName: Notification.Name.UIKeyboardWillShow, object: nil, queue: OperationQueue.main) { [weak self] notification in
-                guard let strongSelf = self else { return }
-                var userInfo = notification.userInfo!
-                var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
-                keyboardFrame = strongSelf.view.convert(keyboardFrame, from: nil)
-                
-                var contentInset:UIEdgeInsets = strongSelf.scrollView.contentInset
-                contentInset.bottom = keyboardFrame.size.height
-                strongSelf.scrollView.contentInset = contentInset
-        }
-        
-        willHideKeyboardNotification = NotificationCenter
-            .default
-            .addObserver(forName: Notification.Name.UIKeyboardWillHide, object: nil, queue: OperationQueue.main) { [weak self] notification in
-                guard let strongSelf = self else { return }
-                let contentInset:UIEdgeInsets = UIEdgeInsets.zero
-                strongSelf.scrollView.contentInset = contentInset
-        }
         
         userNameTextField.delegate = self
         passwordTextField.delegate = self
@@ -72,11 +60,37 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
         return true
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(willShowKeyboardNotification)
-        NotificationCenter.default.removeObserver(willHideKeyboardNotification)
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if keyboardDismissTapGesture == nil {
+            keyboardDismissTapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+            self.view.addGestureRecognizer(keyboardDismissTapGesture!)
+        }
     }
     
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if keyboardDismissTapGesture != nil {
+            self.view.removeGestureRecognizer(keyboardDismissTapGesture!)
+            keyboardDismissTapGesture = nil
+        }
+    }
+    
+    @objc func dismissKeyboard(sender: AnyObject) {
+        userNameTextField?.resignFirstResponder()
+        passwordTextField?.resignFirstResponder()
+    }
+    
+    @objc func adjustForKeyboard(notification: Notification) {
+        let userInfo = notification.userInfo!
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        
+        if notification.name == Notification.Name.UIKeyboardWillHide {
+            scrollView.contentInset = UIEdgeInsets.zero
+        } else {
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+        }
+        scrollView.scrollIndicatorInsets = scrollView.contentInset
+    }
     
     @IBAction func loginButtonActionHandler(_ sender: Any) {
         
@@ -136,7 +150,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
                 }
         }
     }
-        
     
     @IBAction func registerButtonActionHandler(_ sender: Any) {
             let bundle = Bundle.main
@@ -189,8 +202,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
         // Pass the selected object to the new view controller.
     }
     */
-    
-    
 }
 
 

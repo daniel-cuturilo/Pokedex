@@ -12,14 +12,13 @@ import CodableAlamofire
 import Kingfisher
 import PKHUD
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, DateConverter, Progressable {
     var user: User?
     var pokemon: Pokemon?
     var pokemons = [Pokemon]()
     var lastClickedRow = Int()
     
     lazy var refreshControl = UIRefreshControl()
-    
     @IBOutlet weak var toggleSort: UISegmentedControl!
     
     @IBOutlet weak var tableView: UITableView! {
@@ -27,6 +26,10 @@ class HomeViewController: UIViewController {
             tableView.delegate = self
             tableView.dataSource = self
         }
+    }
+    
+    @IBAction func segmentedControlIndexChanged(_ sender: Any) {
+        selectedSegmentIndexAction()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,11 +65,10 @@ class HomeViewController: UIViewController {
         guard let user = user else { return }
         print(user)
         
+        self.showProgress()
         getPokemons()
-    }
-    
-    @IBAction func segmentedControlIndexChanged(_ sender: Any) {
-        selectedSegmentIndexAction()
+        self.hideProgress()
+            
     }
     
     func selectedSegmentIndexAction () {
@@ -131,7 +133,6 @@ class HomeViewController: UIViewController {
         guard let user = user else { return }
         let tokenString = "Token token=" + user.authToken + ", email=" + user.email
         let headers = ["Authorization": tokenString]
-        
         
         Alamofire
             .request(
@@ -221,15 +222,6 @@ extension HomeViewController: UITableViewDataSource {
         return cell
     }
     
-    func convertDate(date: String) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        guard let date = dateFormatter.date(from: date) else { return "" }
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        let convertedDate = dateFormatter.string(from: date)
-        return convertedDate
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
@@ -240,11 +232,12 @@ extension HomeViewController: UITableViewDataSource {
         lastClickedRow = indexPath.row
         
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let pokemonDetailsViewController = storyboard.instantiateViewController(withIdentifier: "PokemonDetailsViewController") as! PokemonDetailsViewController
-        pokemonDetailsViewController.pokemon = pokemons[indexPath.row]
-        pokemonDetailsViewController.user = user
-        pokemonDetailsViewController.delegate = self
-        self.navigationController?.pushViewController(pokemonDetailsViewController, animated: true)
+        let pokemonDetailTableViewController = storyboard.instantiateViewController(withIdentifier: "PokemonDetailTableViewController") as! PokemonDetailTableViewController
+        pokemonDetailTableViewController.pokemon = pokemons[indexPath.row]
+        pokemonDetailTableViewController.user = user
+        pokemonDetailTableViewController.delegate = self
+        self.navigationController?.pushViewController(pokemonDetailTableViewController, animated: true)
+        
     }
     
 }
@@ -257,16 +250,31 @@ extension HomeViewController: NewPokemonDelegate {
     func setNewPokemon(_ pokemon: Pokemon?) {
         guard let pokemon = pokemon else { return }
         pokemons.insert(pokemon, at: 0)
-        //pokemons.append(pokemon)
     }
 }
 
-// update pokemon according to actions in PokemonDetailsViewController (like, dislike)
-extension HomeViewController: PokemonDetailsViewControllerDelegate {
+/* update pokemon according to actions in PokemonDetailTableViewController (like, dislike) */
+extension HomeViewController: PokemonDetailTableViewControllerDelegate {
     func updatePokemon (_ pokemon: Pokemon?) {
         guard let pokemon = pokemon else { return }
         pokemons[lastClickedRow] = pokemon
         selectedSegmentIndexAction()
+    }
+}
+
+protocol DateConverter {
+    func convertDate(date: String) -> String
+}
+
+extension DateConverter {
+    /* default implementation */
+    func convertDate(date: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+        guard let date = dateFormatter.date(from: date) else { return "" }
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        let convertedDate = dateFormatter.string(from: date)
+        return convertedDate
     }
 }
 

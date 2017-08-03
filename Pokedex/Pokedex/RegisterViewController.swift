@@ -118,6 +118,8 @@ class RegisterViewController: UIViewController, Progressable {
 protocol Progressable {
     func showSuccess()
     func showFailure()
+    func showProgress()
+    func hideProgress()
 }
 
 extension Progressable where Self: UIViewController {
@@ -126,5 +128,13 @@ extension Progressable where Self: UIViewController {
     }
     func showFailure() {
         HUD.flash(.error, delay: 1.0)
+    }
+    func showProgress() {
+        PKHUD.sharedHUD.contentView = PKHUDProgressView()
+        PKHUD.sharedHUD.dimsBackground = true
+        PKHUD.sharedHUD.show()
+    }
+    func hideProgress() {
+        PKHUD.sharedHUD.hide(afterDelay: 1.5)
     }
 }

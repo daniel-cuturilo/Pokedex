@@ -1,3 +1,4 @@
+
 //
 //  PokemonDetailsViewController.swift
 //  Pokedex
@@ -12,12 +13,16 @@ import Alamofire
 import CodableAlamofire
 import PKHUD
 
-class PokemonDetailsViewController: UIViewController {
+/*
+class PokemonDetailsViewController: UIViewController, DateConverter {
+    
     var pokemon: Pokemon?
     var user: User?
+    var comments = [Comment]()
     var likePressed: Bool?
     var dislikePressed: Bool?
     
+    @IBOutlet weak var tableView: UITableView!
     weak var delegate: PokemonDetailsViewControllerDelegate?
     
     @IBOutlet weak var heightLabel: UILabel!
@@ -84,7 +89,9 @@ class PokemonDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        //tableView.delegate = self
+        //tableView.dataSource = self
+        
         // Do any additional setup after loading the view.
         guard let pokemon = pokemon else { return }
         heightLabel.text = String(describing: pokemon.height)
@@ -93,6 +100,7 @@ class PokemonDetailsViewController: UIViewController {
         pokemonDescription.text = pokemon.description
         pokemonName.text = pokemon.name
         setImage()
+        getComments()
         
     }
     
@@ -100,6 +108,31 @@ class PokemonDetailsViewController: UIViewController {
         guard let imageURL = pokemon?.attributes.imageURL else { return }
         let url = URL(string: "https://pokeapi.infinum.co" + imageURL)
         pokemonImage.kf.setImage(with: url)
+    }
+    
+    func getComments() {
+        guard let user = user else { return }
+        guard let pokemon = pokemon else { return }
+        let tokenString = "Token token=" + user.authToken + ", email=" + user.email
+        let headers =  ["Authorization": tokenString]
+        print(pokemon)
+        Alamofire
+            .request(
+                "https://pokeapi.infinum.co/api/v1/pokemons/" + pokemon.id + "/comments",
+                method: .get,
+                headers: headers
+            )
+            .responseDecodableObject(keyPath: "data") { [weak self] (response: DataResponse<[Comment]>) in
+                guard let strongSelf = self else { return }
+                switch response.result {
+                case .success(let comments):
+                    strongSelf.comments = comments
+                    DispatchQueue.main.async { strongSelf.tableView.reloadData() }
+                    
+                case .failure(let error):
+                    print("FAILURE: \(error)")
+                }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -123,3 +156,68 @@ class PokemonDetailsViewController: UIViewController {
 protocol PokemonDetailsViewControllerDelegate: class {
     func updatePokemon(_ pokemon: Pokemon?)
 }
+
+// MARK: - TableView -
+extension PokemonDetailsViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return comments.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: CommentCell = tableView.dequeueReusableCell(
+            withIdentifier: "CommentCell",
+            for: indexPath
+            ) as! CommentCell
+        /*
+        let comment = comments[indexPath.row]
+        let date = convertDate(date: comment.createdAt)
+        
+        cell.date.text = date
+        cell.comment.text = comment.content
+         */
+        /*
+        
+        let userId = comment.userId
+        
+        
+        
+        guard let userAuth = user else { return cell }
+        let tokenString = "Token token=" + userAuth.authToken + ", email=" + userAuth.email
+        let headers =  ["Authorization": tokenString]
+        
+        var userResponse: String?
+        
+        Alamofire
+            .request(
+                "https://pokeapi.infinum.co/api/v1/users/" + userId,
+                method: .get,
+                headers: headers
+            )
+            .responseDecodableObject(keyPath: "data") { [weak self] (response: DataResponse<User>) in
+                guard let strongSelf = self else { return }
+                switch response.result {
+                case .success(let user):
+                    print("hey2")
+                    userResponse = user.username
+                    strongSelf.tableView.reloadData()
+                case .failure(let error):
+                    print("FAILURE: \(error)")
+                }
+        }
+                cell.name.text = userResponse
+ 
+ 
+        return cell
+    }
+}
+
+extension PokemonDetailsViewController: UITableViewDelegate {
+    // to be changed later
+}
+ */
+ */
