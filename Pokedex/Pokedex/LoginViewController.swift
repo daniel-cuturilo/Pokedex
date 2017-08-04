@@ -52,6 +52,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
             }
         }
         
+        setBorders(textField: userNameTextField)
+        setBorders(textField: passwordTextField)
+        
         loginButton.setTitle("Login", for:UIControlState.normal)
         registerButton.setTitle("Sign up", for:UIControlState.normal)
         setTextFieldIcons()
@@ -59,7 +62,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
         userNameTextField.delegate = self
         passwordTextField.delegate = self
     }
-        
+    
+    
+    func setBorders(textField: UITextField) {
+        let border = CALayer()
+        let width = CGFloat(2.0)
+        border.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
+        border.frame = CGRect(x: 0, y: textField.frame.size.height - width, width:  textField.frame.size.width + 60, height: textField.frame.size.height)
+        border.borderWidth = width
+        textField.layer.addSublayer(border)
+        textField.layer.masksToBounds = true
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -253,7 +267,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
     
     func animatePasswordColorChange() {
         UIView.animate(
-            withDuration: 0.5,
+            withDuration: 1.0,
             delay: 0.3,
             options: [.autoreverse, .curveEaseInOut],
             animations: {
@@ -266,7 +280,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
     
     func animateUserNameColorChange() {
         UIView.animate(
-            withDuration: 0.5,
+            withDuration: 1.0,
             delay: 0.3,
             options: [.autoreverse, .curveEaseInOut],
             animations: {
@@ -276,6 +290,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
                 self.userNameTextField.backgroundColor = UIColor.white
         })
     }
+    
     
     func animateColorChange() {
         let color: UIColor = self.loginButton.backgroundColor!

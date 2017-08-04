@@ -161,44 +161,74 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="yST-tk-rsG">
-                                <rect key="frame" x="30" y="91" width="260" height="89"/>
+                                <rect key="frame" x="30" y="91" width="260" height="160"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="E-mail" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ktb-dc-qXt">
-                                        <rect key="frame" x="0.0" y="0.0" width="260" height="22"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="260" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="22" id="Kc9-Yd-Tzz"/>
+                                            <constraint firstAttribute="height" constant="40" id="o7a-fl-vIx"/>
                                         </constraints>
                                         <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Nickname" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HLR-KM-sNP">
-                                        <rect key="frame" x="0.0" y="22" width="260" height="22"/>
+                                        <rect key="frame" x="0.0" y="40" width="260" height="40"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="22" id="lHb-10-6ZC"/>
+                                            <constraint firstAttribute="height" constant="40" id="zwK-Km-6Jh"/>
                                         </constraints>
                                         <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cFn-fO-cOH">
-                                        <rect key="frame" x="0.0" y="44" width="260" height="24"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="24" id="V8I-bU-CIH"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6F1-wd-FPV">
-                                        <rect key="frame" x="0.0" y="68" width="260" height="21"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="21" id="UvV-di-54q"/>
-                                        </constraints>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lDp-WF-vO3">
+                                        <rect key="frame" x="0.0" y="80" width="260" height="40"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cFn-fO-cOH">
+                                                <rect key="frame" x="0.0" y="0.0" width="236" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="xQC-fo-P8X"/>
+                                                </constraints>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JOF-2W-tiJ">
+                                                <rect key="frame" x="236" y="0.0" width="24" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="24" id="fLf-xR-OAE"/>
+                                                </constraints>
+                                                <state key="normal" title="Button" image="ic-visibility"/>
+                                                <connections>
+                                                    <action selector="lockButtonActionHandler:" destination="thV-9D-Jah" eventType="touchUpInside" id="qUr-Ug-T9M"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yuy-Tk-wNR">
+                                        <rect key="frame" x="0.0" y="120" width="260" height="40"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6F1-wd-FPV">
+                                                <rect key="frame" x="0.0" y="0.0" width="236" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="gKx-j0-FJu"/>
+                                                </constraints>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p9R-T8-qDN">
+                                                <rect key="frame" x="236" y="0.0" width="24" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="24" id="awv-bK-c5c"/>
+                                                </constraints>
+                                                <state key="normal" title="Button" image="ic-visibility"/>
+                                                <connections>
+                                                    <action selector="lockConfirmButtonActionHandler:" destination="thV-9D-Jah" eventType="touchUpInside" id="XTC-XG-rvz"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OSZ-hl-4kc">
@@ -230,15 +260,18 @@
                     </view>
                     <connections>
                         <outlet property="emailTextField" destination="ktb-dc-qXt" id="lhV-dI-9XZ"/>
+                        <outlet property="lockButton" destination="JOF-2W-tiJ" id="qaJ-ZF-dit"/>
+                        <outlet property="lockConfirmButton" destination="p9R-T8-qDN" id="10v-df-5nU"/>
                         <outlet property="nicknameTextField" destination="HLR-KM-sNP" id="6Rv-jK-dI7"/>
                         <outlet property="passwordConfirmTextField" destination="6F1-wd-FPV" id="Slg-Eg-rTl"/>
                         <outlet property="passwordTextField" destination="cFn-fO-cOH" id="nn2-ws-SVM"/>
                         <outlet property="signUpButton" destination="OSZ-hl-4kc" id="kmx-fq-hOZ"/>
+                        <outlet property="stackView" destination="yST-tk-rsG" id="IEk-O4-F3K"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pat-KZ-fDo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="855" y="-3"/>
+            <point key="canvasLocation" x="855" y="-3.1690140845070425"/>
         </scene>
         <!--Pokedex-->
         <scene sceneID="cO4-89-Z3J">
@@ -1122,6 +1155,7 @@
         <image name="ic-like" width="56" height="56"/>
         <image name="ic-person" width="24" height="24"/>
         <image name="ic-send" width="24" height="24"/>
+        <image name="ic-visibility" width="24" height="24"/>
         <image name="pokeball" width="151" height="151"/>
         <image name="pokedex-logo-big" width="1200" height="500"/>
     </resources>

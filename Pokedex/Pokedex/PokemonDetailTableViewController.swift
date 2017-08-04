@@ -65,6 +65,7 @@ class PokemonDetailTableViewController: UITableViewController, DateConverter, Pr
         pokemonName.text = pokemon.name
         setImage()
         getComments()
+        setBorders(textField: commentTextField)
         
         commentTextField.delegate = self
     }
@@ -133,6 +134,16 @@ class PokemonDetailTableViewController: UITableViewController, DateConverter, Pr
         }
         rectangle.frame = newFrameRectangle
         self.view.layoutIfNeeded()
+    }
+    
+    func setBorders(textField: UITextField) {
+        let border = CALayer()
+        let width = CGFloat(2.0)
+        border.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
+        border.frame = CGRect(x: 0, y: textField.frame.size.height - width, width:  textField.frame.size.width + 60, height: textField.frame.size.height)
+        border.borderWidth = width
+        textField.layer.addSublayer(border)
+        textField.layer.masksToBounds = true
     }
     
     func setImage() {

@@ -13,11 +13,31 @@ import PKHUD
 
 class RegisterViewController: UIViewController, Progressable {
 
+    @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var passwordConfirmTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var nicknameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var signUpButton: UIButton!
+    
+    @IBOutlet weak var lockConfirmButton: UIButton!
+    @IBOutlet weak var lockButton: UIButton!
+    
+    @IBAction func lockButtonActionHandler(_ sender: Any) {
+        if (passwordTextField.isSecureTextEntry == true) {
+            passwordTextField.isSecureTextEntry = false
+        } else {
+            passwordTextField.isSecureTextEntry = true
+        }
+    }
+    
+    @IBAction func lockConfirmButtonActionHandler(_ sender: Any) {
+        if (passwordConfirmTextField.isSecureTextEntry == true) {
+            passwordConfirmTextField.isSecureTextEntry = false
+        } else {
+            passwordConfirmTextField.isSecureTextEntry = true
+        }
+    }
     
     @IBAction func signUpButtonActionHandler(_ sender: Any) {
         guard
@@ -70,9 +90,38 @@ class RegisterViewController: UIViewController, Progressable {
                     
                 case .failure(let error):
                     print("FAILURE: \(error)")
-                    self?.showFailure()
+                    self?.handleRegisterMistakes()
                 }
         }
+    }
+    
+    func handleRegisterMistakes() {
+        guard let email = self.emailTextField.text,
+        let password = self.passwordTextField.text,
+        let passwordConfirm = self.passwordConfirmTextField.text,
+        let nickname = self.nicknameTextField.text
+            else {
+                return
+        }
+        
+        
+        if (email.isEmpty || password.isEmpty || passwordConfirm.isEmpty || nickname.isEmpty) {
+            initializeAlert(message: "You didn't enter all the data.")
+        }
+        
+        if (!(email.contains("@"))) {
+            initializeAlert(message: "Check your e-mail.")
+        } else if ((password.characters.count) < 8) {
+            initializeAlert(message: "Password needs to have at least 8 characters.")
+        } else if (password != passwordConfirm) {
+            initializeAlert(message: "Passwords do not match.")
+        }
+    }
+    
+    func initializeAlert (message: String) {
+        let alertController = UIAlertController(title: "Register not successful.", message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default,handler: nil))
+        present(alertController, animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -80,7 +129,37 @@ class RegisterViewController: UIViewController, Progressable {
         
         // Do any additional setup after loading the view.
         setTextFieldIcons()
+        setBorders(textField: nicknameTextField)
+        setBorders(textField: passwordTextField)
+        setBorders(textField: passwordConfirmTextField)
+        setBorders(textField: emailTextField)
+        setBorders(button: lockButton)
+        setBorders(button: lockConfirmButton)
+        navigationItem.title = "Register"
+        
+        
     }
+    
+    func setBorders(textField: UITextField) {
+        let border = CALayer()
+        let width = CGFloat(2.0)
+        border.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
+        border.frame = CGRect(x: 0, y: textField.frame.size.height - width, width:  stackView.frame.size.width + 60, height: textField.frame.size.height)
+        border.borderWidth = width
+        textField.layer.addSublayer(border)
+        textField.layer.masksToBounds = true
+    }
+    
+    func setBorders(button: UIButton) {
+        let border = CALayer()
+        let width = CGFloat(2.0)
+        border.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
+        border.frame = CGRect(x: 0, y: button.frame.size.height - width, width:  button.frame.size.width, height: button.frame.size.height)
+        border.borderWidth = width
+        button.layer.addSublayer(border)
+        button.layer.masksToBounds = true
+    }
+    
     
     func setTextFieldIcons () {
         let iconWidth = 24
