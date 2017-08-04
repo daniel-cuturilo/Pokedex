@@ -40,6 +40,13 @@ class PokemonDetailTableViewController: UITableViewController, DateConverter, Pr
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(named: "ic-edit"),
+            style: .plain,
+            target: self,
+            action: #selector(edit)
+        )
+        
         imageView.alpha = 0
         UIView.animate(withDuration: 1.0) {
             self.imageView.alpha = 1
@@ -58,13 +65,8 @@ class PokemonDetailTableViewController: UITableViewController, DateConverter, Pr
         pokemonName.text = pokemon.name
         setImage()
         getComments()
-        setTextViewSize()
-        self.view.layoutIfNeeded()
         
         commentTextField.delegate = self
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -106,7 +108,9 @@ class PokemonDetailTableViewController: UITableViewController, DateConverter, Pr
     
     
     override func viewDidLayoutSubviews() {
-        setTextViewSize()
+        DispatchQueue.main.async {
+            self.setTextViewSize()
+        }
     }
     
     func setTextViewSize () {
@@ -397,6 +401,76 @@ private func processUploadRequest(_ uploadRequest: UploadRequest) {
                         })
         }
         )}
+    
+    
+    @objc func edit () {
+        let alertController = UIAlertController(title: "Edit Pokemon Name", message: "", preferredStyle: .alert)
+        
+        let saveAction = UIAlertAction(title: "Save", style: .default, handler: { [weak self] alert -> Void in
+            let textField = alertController.textFields![0] as UITextField
+            guard let text = textField.text else {
+                return
+            }
+            self?.editPokemonNameRequest(text: text)
+            
+            self?.showSuccess()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                self?.pokemonName.text = self?.pokemon?.name
+            }
+            
+            self?.alertController.dismiss(animated: true, completion: nil)
+            
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
+            (action: UIAlertAction!) -> Void in
+        })
+        
+        alertController.addTextField { [weak self] (textField : UITextField!) -> Void in
+            textField.text = self?.pokemon?.name
+        }
+        
+        alertController.addAction(saveAction)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true, completion: nil)
+        
+    }
+    
+    func editPokemonNameRequest(text: String) {
+        guard let user = user else { return }
+        guard let pokemon = pokemon else { return }
+        let tokenString = "Token token=" + user.authToken + ", email=" + user.email
+        let headers =  ["Authorization": tokenString]
+        let attributes = [
+            "name": text
+        ]
+        let URL = "https://pokeapi.infinum.co//api/v1/pokemons/" + pokemon.id
+        
+        Alamofire
+            .upload(multipartFormData: { multipartFormData in
+                for (key, value) in attributes {
+                    multipartFormData.append((value.data(using: .utf8)!), withName: "data[attributes][" + key + "]")
+                }
+            }, to: URL, method: .put, headers: headers) { [weak self] result in
+                switch result {
+                case .success(let uploadRequest, _, _):
+                    uploadRequest.responseDecodableObject(keyPath: "data") { [weak self] (response: DataResponse<Pokemon>) in
+                        guard let strongSelf = self else { return }
+                        switch response.result {
+                        case .success(let pokemon):
+                            print("DECODED: \(pokemon)")
+                            strongSelf.pokemon = pokemon
+                        case .failure(let error):
+                            print("FAILURE: \(error)")
+                            strongSelf.showFailure()
+                        }
+                    }
+                case .failure(let encodingError):
+                    print(encodingError)
+                }
+        }
+    }
     
     /*
     // Override to support conditional editing of the table view.
