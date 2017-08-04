@@ -113,12 +113,40 @@ class AddPokemonViewController: UIViewController, Progressable, UIImagePickerCon
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setTextFieldIcons()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func setTextFieldIcons () {
+        let iconWidth = 24
+        let iconHeight = 24
+        
+        let nameImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: iconWidth, height: iconHeight))
+        let descriptionImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: iconWidth, height: iconHeight))
+        let heightImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: iconWidth, height: iconHeight))
+        let weightImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: iconWidth, height: iconHeight))
+        
+        
+        nameTextField.leftViewMode = UITextFieldViewMode.always
+        descriptionTextField.leftViewMode = UITextFieldViewMode.always
+        weightTextField.leftViewMode = UITextFieldViewMode.always
+        heightTextField.leftViewMode = UITextFieldViewMode.always
+        
+        
+        nameImageView.image = UIImage(named: "ic-mail")
+        descriptionImageView.image = UIImage(named: "ic-sheet")
+        
+        nameTextField.leftView = nameImageView
+        descriptionTextField.leftView = descriptionImageView
+        weightTextField.leftView = weightImageView
+        heightTextField.leftView = heightImageView
+    }
+    
+    
     
 
     /*

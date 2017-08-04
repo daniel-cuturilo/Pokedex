@@ -141,16 +141,16 @@ class PokemonDetailTableViewController: UITableViewController, DateConverter, Pr
         getCommentsRequest()
     }
     
-    @IBAction func likeButtonActionHandler(_ sender: Any) {
+    @IBAction func likeButtonActionHandler(_ sender: UIButton) {
         likeRequest()
-        //likeAnimation()
+        likeAnimation(sender)
     }
     
-    @IBAction func dislikeButtonActionHandler(_ sender: Any) {
+    @IBAction func dislikeButtonActionHandler(_ sender: UIButton) {
         dislikeRequest()
+        likeAnimation(sender)
     }
     
-    // to be edited..
     @IBAction func commentButtonActionHandler(_ sender: Any) {
         if (commentTextField.text!.isEmpty) {
             let alertController = UIAlertController(title: "Add New Comment", message: "", preferredStyle: .alert)
@@ -384,6 +384,19 @@ private func processUploadRequest(_ uploadRequest: UploadRequest) {
             cell.layer.transform = CATransform3DIdentity
         }, completion: nil)
     }
+    
+    
+    func likeAnimation(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.5,
+                       animations: {
+                        sender.transform = CGAffineTransform(scaleX: 2.5, y: 2.5)
+        },
+                       completion: { _ in
+                        UIView.animate(withDuration: 0.5, delay: 0.5, animations: {
+                            sender.transform = CGAffineTransform.identity
+                        })
+        }
+        )}
     
     /*
     // Override to support conditional editing of the table view.
