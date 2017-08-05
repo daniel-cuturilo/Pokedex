@@ -105,10 +105,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
         }
     }
     
-    // might be edited...
     func validateUserName(text: String) -> Bool {
         var result = false
-        result = text.characters.contains { ["@"].contains($0) }
+        result = text.characters.contains { ["@"].contains($0) } && text.characters.contains { ["."].contains($0) }
         return result
     }
     
@@ -328,19 +327,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, Progressable {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }
 
 

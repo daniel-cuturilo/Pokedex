@@ -12,7 +12,7 @@ import CodableAlamofire
 import Kingfisher
 import PKHUD
 
-class HomeViewController: UIViewController, DateConverter, Progressable {
+class HomeViewController: UIViewController, Progressable {
     var user: User?
     var pokemon: Pokemon?
     var pokemons = [Pokemon]()
@@ -85,7 +85,6 @@ class HomeViewController: UIViewController, DateConverter, Progressable {
         self.tableView.reloadData()
     }
     
-    // correct?
     @objc func add () {
         let bundle = Bundle.main
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
@@ -95,7 +94,6 @@ class HomeViewController: UIViewController, DateConverter, Progressable {
         self.navigationController?.pushViewController(addPokemonViewController, animated: true)
     }
     
-    // correct?
     @objc func logout () {
         guard let user = user else { return }
         let tokenString = "Token token=" + user.authToken + ", email=" + user.email
@@ -171,7 +169,6 @@ class HomeViewController: UIViewController, DateConverter, Progressable {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
 }
@@ -207,7 +204,7 @@ extension HomeViewController: UITableViewDataSource {
         cell.pokemonImage?.kf.cancelDownloadTask()
         
         let pokemon = pokemons[indexPath.row]
-        let date = convertDate(date: pokemon.createdAt)
+        let date = DateFormatter.convertDate(date: pokemon.createdAt)
         
         cell.label.text = pokemon.name
         cell.creationDateLabel.text = date
@@ -261,17 +258,16 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     func animateIn(cell: UITableViewCell, withDelay delay: TimeInterval) {
-        let initialScale: CGFloat = 1.2
+        let scaleInitial: CGFloat = 1.2
         let duration: TimeInterval = 0.5
         
         cell.alpha = 0.0
-        cell.layer.transform = CATransform3DMakeScale(initialScale, initialScale, 1)
+        cell.layer.transform = CATransform3DMakeScale(scaleInitial, scaleInitial, 1)
         UIView.animate(withDuration: duration, delay: delay, options: UIViewAnimationOptions.curveEaseOut, animations: {
             cell.alpha = 1.0
             cell.layer.transform = CATransform3DIdentity
         }, completion: nil)
     }
-    
 }
 
 extension HomeViewController: UITableViewDelegate {
@@ -294,19 +290,25 @@ extension HomeViewController: PokemonDetailTableViewControllerDelegate {
     }
 }
 
-protocol DateConverter {
-    func convertDate(date: String) -> String
-}
-
-extension DateConverter {
-    /* default implementation */
-    func convertDate(date: String) -> String {
+extension DateFormatter {
+    
+    static let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        guard let date = dateFormatter.date(from: date) else { return "" }
+        return dateFormatter
+    }()
+    
+    static let stringDateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
-        let convertedDate = dateFormatter.string(from: date)
+        return dateFormatter
+    }()
+    
+    static func convertDate(date: String) -> String {
+        guard let date = dateFormatter.date(from: date) else { return "" }
+        let convertedDate = stringDateFormatter.string(from: date)
         return convertedDate
     }
 }
+
 

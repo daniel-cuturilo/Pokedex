@@ -118,7 +118,6 @@ class AddPokemonViewController: UIViewController, Progressable, UIImagePickerCon
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func setTextFieldIcons () {
@@ -145,20 +144,6 @@ class AddPokemonViewController: UIViewController, Progressable, UIImagePickerCon
         weightTextField.leftView = weightImageView
         heightTextField.leftView = heightImageView
     }
-    
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 protocol NewPokemonDelegate: class {

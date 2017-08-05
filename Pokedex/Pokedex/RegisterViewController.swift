@@ -19,7 +19,6 @@ class RegisterViewController: UIViewController, Progressable {
     @IBOutlet weak var nicknameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var signUpButton: UIButton!
-    
     @IBOutlet weak var lockConfirmButton: UIButton!
     @IBOutlet weak var lockButton: UIButton!
     
@@ -104,7 +103,6 @@ class RegisterViewController: UIViewController, Progressable {
                 return
         }
         
-        
         if (email.isEmpty || password.isEmpty || passwordConfirm.isEmpty || nickname.isEmpty) {
             initializeAlert(message: "You didn't enter all the data.")
         }
@@ -127,7 +125,6 @@ class RegisterViewController: UIViewController, Progressable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
         setTextFieldIcons()
         setBorders(textField: nicknameTextField)
         setBorders(textField: passwordTextField)
@@ -135,9 +132,8 @@ class RegisterViewController: UIViewController, Progressable {
         setBorders(textField: emailTextField)
         setBorders(button: lockButton)
         setBorders(button: lockConfirmButton)
+        
         navigationItem.title = "Register"
-        
-        
     }
     
     func setBorders(textField: UITextField) {
@@ -188,7 +184,6 @@ class RegisterViewController: UIViewController, Progressable {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
 }

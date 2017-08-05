@@ -11,7 +11,7 @@ import Alamofire
 import CodableAlamofire
 import Kingfisher
 
-class PokemonDetailTableViewController: UITableViewController, DateConverter, Progressable, UITextFieldDelegate {
+class PokemonDetailTableViewController: UITableViewController, Progressable, UITextFieldDelegate {
     var pokemon: Pokemon?
     var user: User?
     var comments = Comment(data: [], included: [])
@@ -36,6 +36,7 @@ class PokemonDetailTableViewController: UITableViewController, DateConverter, Pr
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var rectangle: UIImageView!
+    @IBOutlet weak var likesLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +62,7 @@ class PokemonDetailTableViewController: UITableViewController, DateConverter, Pr
         heightLabel.text = String(describing: pokemon.height)
         genderLabel.text = pokemon.gender
         weightLabel.text = String(describing: pokemon.weight)
+        likesLabel.text = String(describing: pokemon.totalVoteCount)
         pokemonDescription.text = pokemon.description
         pokemonName.text = pokemon.name
         setImage()
@@ -159,11 +161,19 @@ class PokemonDetailTableViewController: UITableViewController, DateConverter, Pr
     @IBAction func likeButtonActionHandler(_ sender: UIButton) {
         likeRequest()
         likeAnimation(sender)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            guard let pokemon = self.pokemon else { return }
+            self.likesLabel.text = String(describing: pokemon.totalVoteCount)
+        }
     }
     
     @IBAction func dislikeButtonActionHandler(_ sender: UIButton) {
         dislikeRequest()
         likeAnimation(sender)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            guard let pokemon = self.pokemon else { return }
+            self.likesLabel.text = String(describing: pokemon.totalVoteCount)
+        }
     }
     
     @IBAction func commentButtonActionHandler(_ sender: Any) {
@@ -236,10 +246,6 @@ class PokemonDetailTableViewController: UITableViewController, DateConverter, Pr
         }
     }
     
-/*
-private func processUploadRequest(_ uploadRequest: UploadRequest) {
-    
-}*/
     
     func getCommentsSize() -> Int {
         return self.comments.data.count
@@ -345,12 +351,10 @@ private func processUploadRequest(_ uploadRequest: UploadRequest) {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -367,7 +371,7 @@ private func processUploadRequest(_ uploadRequest: UploadRequest) {
         
         let comment = comments.data[indexPath.row]
         
-        let date = convertDate(date: comment.createdAt)
+        let date = DateFormatter.convertDate(date: comment.createdAt)
         cell.date.text = date
         cell.date.sizeToFit()
         
@@ -482,51 +486,6 @@ private func processUploadRequest(_ uploadRequest: UploadRequest) {
                 }
         }
     }
-    
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
